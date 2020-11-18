@@ -1,0 +1,15 @@
+---
+- name: Setup Alacritty
+  package:
+    name: alacritty
+    state: present
+
+- name: Ensure alacritty directory exists in $HOME/.config
+  file:
+    path: $HOME/.config/alacritty
+    state: directory
+
+- name: Copy configuration file
+  copy:
+    src: alacritty.yaml
+    dest: $HOME/.config/alacritty
