@@ -4,12 +4,13 @@
     name: alacritty
     state: present
 
-- name: Ensure alacritty directory exists in $HOME/.config
+- name: Ensure alacritty configuration directory exists
   file:
-    path: $HOME/.config/alacritty
+    src: $HOME/.config/alacritty
     state: directory
 
-- name: Copy configuration file
-  copy:
-    src: alacritty.yml
-    dest: $HOME/.config/alacritty
+- name: Create symbolic link for alacritty configuration file
+  file:
+    src: "{{ role_path }}/files/alacritty.yml"
+    path: $HOME/.config/alacritty/alacritty.yml
+    state: link
