@@ -11,5 +11,5 @@
 
 - name: Copy configuration file
   copy:
-    src: alacritty.yaml
+    src: alacritty.yml
     dest: $HOME/.config/alacritty
