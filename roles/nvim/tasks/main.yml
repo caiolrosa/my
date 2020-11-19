@@ -1,0 +1,26 @@
+---
+- name: Install nvim
+  become: true
+  package:
+    name: neovim
+    state: present
+
+- name: Ensure nvim configuration directory exists
+  file:
+    path: $HOME/.config/nvim
+    state: directory
+
+- name: Create symbolic link to nvim configuration file
+  file:
+    src: "{{ role_path }}/files/init.vim"
+    path: $HOME/.config/nvim/init.vim
+    state: link
+
+- name: Create symbolic link to coc configuration file
+  file:
+    src: "{{ role_path }}/files/coc-settings.json"
+    path: $HOME/.config/nvim/coc-settings.json
+    state: link
+
+- import_tasks: install_fzf.yml
+- import_tasks: install_vim_plug.yml
