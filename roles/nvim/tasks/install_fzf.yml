@@ -1,0 +1,18 @@
+---
+- name: Install fzf
+  become: true
+  package:
+    name: fzf
+    state: present
+
+- name: Install bat (syntax highlighting)
+  become: true
+  package:
+    name: bat
+    state: present
+
+- name: Install Ripgrep
+  become: true
+  package:
+    name: ripgrep
+    state: present

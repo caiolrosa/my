@@ -1,0 +1,8 @@
+{
+  "solargraph.diagnostics": true,
+  "java.jdt.ls.vmargs": "-javaagent:/usr/local/share/lombok/lombok.jar -Xbootclasspath/a:/usr/local/share/lombok/lombok.jar",
+  "java.referencesCodeLens.enabled": true,
+  "java.implementationsCodeLens.enabled": true,
+  "java.autobuild.enabled": true,
+  "java.import.maven.enabled": true
+}
