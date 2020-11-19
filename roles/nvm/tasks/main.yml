@@ -1,0 +1,15 @@
+---
+- name: Install nvm
+  shell: >
+    "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash"
+  args:
+    executable: /bin/zsh
+    chdir: "{{ ansible_env.HOME }}"
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+- name: Install latest node
+  shell: >
+    . {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install node
+  args:
+    executable: /bin/zsh
+    chdir: "{{ ansible_env.HOME }}"
