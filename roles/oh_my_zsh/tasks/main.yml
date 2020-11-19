@@ -1,0 +1,37 @@
+---
+- name: Ensure zsh is installed
+  become: true
+  package:
+    name: zsh
+    state: present
+
+- name: Make zsh the default shell
+  command: chsh -s $(which zsh)
+
+- name: Download oh-my-zsh installer
+  get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/zsh-installer.sh
+
+- name: Run oh-my-zsh install script
+  command: sh /tmp/zsh-installer.sh
+
+- name: Remove oh-my-zsh install script
+  file:
+    path: /tmp/zsh-installer.sh
+    state: absent
+
+- name: Check if there already is a zsh configuration file
+  stat:
+    path: $HOME/.zshrc
+  register: current_zshrc 
+
+- name: Backup current zsh configuration file if exists
+  command: mv $HOME/.zshrc $HOME/.zshrc.old
+  when: current_zshrc.stat.exists
+
+- name: Create symbolic link to zsh configuration file
+  file:
+    src: "{{ role_path }}/files/.zshrc"
+    path: $HOME/.zshrc
+    state: link
