@@ -6,7 +6,7 @@
 
 - name: Ensure alacritty configuration directory exists
   file:
-    src: $HOME/.config/alacritty
+    path: $HOME/.config/alacritty
     state: directory
 
 - name: Create symbolic link for alacritty configuration file
