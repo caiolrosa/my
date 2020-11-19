@@ -1,0 +1,14 @@
+---
+- name: Ensure ttf fonts directory exists
+  file:
+    path: /usr/share/fonts/TTF
+    state: directory
+
+- name: Extract fonts
+  unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerd_fonts_version }}/SourceCodePro.zip"
+    dest: /usr/share/fonts/TTF
+    remote_src: yes
+
+- name: Update fonts cache
+  command: fc-cache -fv
