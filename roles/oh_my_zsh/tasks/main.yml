@@ -5,8 +5,11 @@
     name: zsh
     state: present
 
-- name: Make zsh the default shell
-  command: chsh -s $(which zsh)
+- name: Ensure .profile exists in user home
+  copy:
+    content: ""
+    dest: $HOME/.profile
+    force: no
 
 - name: Download oh-my-zsh installer
   get_url:
