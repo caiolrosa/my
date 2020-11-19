@@ -13,5 +13,5 @@
 
 - name: Set zsh as default user shell
   user:
-    name: $USER
+    name: "{{ lookup('env', 'USER') }}"
     shell: /bin/zsh
