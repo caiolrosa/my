@@ -1,7 +1,7 @@
 ---
 - name: Install nvm
   shell: >
-    "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash"
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
   args:
     executable: /bin/zsh
     chdir: "{{ ansible_env.HOME }}"
