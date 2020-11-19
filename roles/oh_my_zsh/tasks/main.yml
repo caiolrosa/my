@@ -1,28 +1,10 @@
 ---
-- name: Ensure zsh is installed
-  become: true
-  package:
-    name: zsh
-    state: present
-
-- name: Ensure .profile exists in user home
-  copy:
-    content: ""
-    dest: $HOME/.profile
-    force: no
+- import_tasks: install_zsh.yml
 
 - name: Download oh-my-zsh installer
-  get_url:
-    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    dest: /tmp/zsh-installer.sh
-
-- name: Run oh-my-zsh install script
-  command: sh /tmp/zsh-installer.sh
-
-- name: Remove oh-my-zsh install script
-  file:
-    path: /tmp/zsh-installer.sh
-    state: absent
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: $HOME/.oh-my-zsh
 
 - name: Check if there already is a zsh configuration file
   stat:

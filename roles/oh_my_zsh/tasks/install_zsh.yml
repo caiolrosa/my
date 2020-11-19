@@ -1,0 +1,17 @@
+---
+- name: Ensure zsh is installed
+  become: true
+  package:
+    name: zsh
+    state: present
+
+- name: Ensure .profile exists in user home
+  copy:
+    content: ""
+    dest: $HOME/.profile
+    force: no
+
+- name: Set zsh as default user shell
+  user:
+    name: $USER
+    shell: /bin/zsh
