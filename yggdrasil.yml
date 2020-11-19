@@ -6,3 +6,4 @@
     - "{{ playbook_dir }}/vars/external_vars.yml"
   roles:
     - alacritty
+    - nerd_fonts
