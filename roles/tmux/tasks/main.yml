@@ -1,0 +1,17 @@
+---
+- name: Install tmux
+  become: true
+  package:
+    name: tmux
+    state: present
+
+- name: Ensure tmux configuration directory exists
+  file:
+    path: $HOME/.config/tmux
+    state: directory
+
+- name: Create symbolic link for tmux configuration file
+  file:
+    src: "{{ role_path }}/files/tmux.conf"
+    path: $HOME/.config/tmux/tmux.conf
+    state: link
