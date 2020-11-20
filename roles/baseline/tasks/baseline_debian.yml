@@ -15,8 +15,11 @@
     upgrade: "yes"
     update_cache: true
 
-- name: Ensure git is installed
+- name: Ensure basic applications are installed
   become: true
   apt:
     name: git
     state: present
+  loop:
+    - git
+    - build-essential
