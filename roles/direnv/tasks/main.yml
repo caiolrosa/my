@@ -1,9 +1,9 @@
 ---
 - import_tasks: install_direnv_debian.yml
-  when: ansible_facts.family_os == "Debian"
+  when: ansible_facts.os_family == "Debian"
 
 - import_tasks: install_direnv_arch.yml
-  when: ansible_facts.family_os == "Archlinux"
+  when: ansible_facts.os_family == "Archlinux"
 
 - name: Setup direnv hook
   lineinfile:
