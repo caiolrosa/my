@@ -1,5 +1,6 @@
 ---
 - name: Install yay (Manjaro only)
+  become: true
   package:
     name: yay
     state: latest
