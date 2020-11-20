@@ -16,6 +16,11 @@
     path: $HOME/.config/nvim/init.vim
     state: link
 
+- name: Create symbolic link to coc configuration file
+  file:
+    src: "{{ role_path }}/files/coc-settings.json"
+    path: $HOME/.config/nvim/coc-settings.json
+    state: link
+
 - import_tasks: install_fzf.yml
 - import_tasks: install_vim_plug.yml
-- import_tasks: setup_coc.yml
