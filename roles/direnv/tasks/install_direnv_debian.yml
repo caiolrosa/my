@@ -1,5 +1,6 @@
 ---
 - name: Install direnv (Debian)
+  become: true
   apt:
     name: direnv
     state: latest
