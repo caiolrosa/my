@@ -3,7 +3,7 @@
   become: true
   package:
     name: zsh
-    state: present
+    state: latest
 
 - name: Ensure .profile exists in user home
   copy:

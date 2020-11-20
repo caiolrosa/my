@@ -3,7 +3,7 @@
   become: true
   package:
     name: alacritty
-    state: present
+    state: latest
 
 - name: Ensure alacritty configuration directory exists
   file:
