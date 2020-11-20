@@ -14,3 +14,4 @@
     - direnv
     - docker
     - { role: yay, when: ansible_facts.os_family == "Archlinux" }
+    - google_chrome
