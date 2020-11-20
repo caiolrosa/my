@@ -5,11 +5,18 @@
     name: fzf
     state: latest
 
-- name: Install bat (syntax highlighting)
+- name: Install bat (Arch)
   become: true
   package:
     name: bat
     state: latest
+  when: ansible_facts.os_family == "Archlinux"
+
+- name: Install bat (Debian)
+  become: true
+  apt:
+    deb: "https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat_{{ bat_version }}_amd64.deb"
+  when: ansible_facts.os_family == "Debian"
 
 - name: Setup bat's syntax highlight color
   lineinfile:
