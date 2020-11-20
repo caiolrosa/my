@@ -2,4 +2,4 @@
 - name: Install alacritty (Debian)
   become: true
   apt:
-    deb: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_version }}/Alacritty-v{{ alacritty_version }}-ubuntu_18_04_amd64.deb"
+    deb: "https://github.com/barnumbirr/alacritty-debian/releases/download/v{{ alacritty_version }}/alacritty_{{ alacritty_version }}_amd64_debian_buster.deb"
