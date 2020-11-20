@@ -1,4 +1,14 @@
 ---
+- name: Add user to sudo group
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups:
+      - sudo
+    append: true
+
+- name: Reset SSH connection
+  meta: reset_connection
+
 - name: Update system (Debian)
   become: true
   apt:
