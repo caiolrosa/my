@@ -8,7 +8,7 @@
 - name: Ensure basic applications are installed
   become: true
   apt:
-    name: git
+    name: "{{ item }}"
     state: present
   loop:
     - git
