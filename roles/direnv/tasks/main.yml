@@ -9,9 +9,10 @@
   get_url:
     url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_version }}/direnv.linux-amd64"
     dest: /usr/local/bin/direnv
+    mode: 0755
   when: direnv.stat.exists == False
 
 - name: Setup direnv hook
   lineinfile:
     path: $HOME/.profile
-    line: 'eval "$(direnv hook bash)"'
+    line: 'eval "$(direnv hook zsh)"'
