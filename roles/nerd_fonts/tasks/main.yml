@@ -1,5 +1,6 @@
 ---
 - name: Ensure ttf fonts directory exists
+  become: true
   file:
     path: /usr/share/fonts/TTF
     state: directory
