@@ -11,6 +11,11 @@
     name: bat
     state: latest
 
+- name: Setup bat's syntax highlight color
+  lineinfile:
+    path: $HOME/.profile
+    line: 'export BAT_THEME="Nord"'
+
 - name: Install Ripgrep
   become: true
   package:
