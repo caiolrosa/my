@@ -1,4 +1,8 @@
 ---
+- name: Clone chrome repository from AUR
+  git:
+    repo: https://aur.archlinux.org/google-chrome.git
+    dest: $HOME/google-chrome
+
 - name: Install Google Chrome (Manjaro)
-  become: true
-  command: yay -S google-chrome --noconfirm
+  shell: cd $HOME/google-chrome && makepkg -si

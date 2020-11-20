@@ -5,6 +5,7 @@
   vars_files:
     - "{{ playbook_dir }}/vars/external_vars.yml"
   roles:
+    - baseline
     - alacritty
     - nerd_fonts
     - tmux

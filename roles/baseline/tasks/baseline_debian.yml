@@ -1,0 +1,12 @@
+---
+- name: Update system (Debian)
+  become: true
+  apt:
+    upgrade: "yes"
+    update_cache: true
+
+- name: Ensure git is installed
+  become: true
+  apt:
+    name: git
+    state: present
