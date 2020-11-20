@@ -3,7 +3,7 @@
   become: true
   package:
     name: neovim
-    state: present
+    state: latest
 
 - name: Ensure nvim configuration directory exists
   file:

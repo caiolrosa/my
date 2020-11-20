@@ -3,16 +3,16 @@
   become: true
   package:
     name: fzf
-    state: present
+    state: latest
 
 - name: Install bat (syntax highlighting)
   become: true
   package:
     name: bat
-    state: present
+    state: latest
 
 - name: Install Ripgrep
   become: true
   package:
     name: ripgrep
-    state: present
+    state: latest

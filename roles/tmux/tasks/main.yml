@@ -3,7 +3,7 @@
   become: true
   package:
     name: tmux
-    state: present
+    state: latest
 
 - name: Ensure tmux configuration directory exists
   file:
