@@ -1,4 +1,9 @@
 ---
+- name: Update system
+  yay:
+    update_cache: yes
+    upgrade: yes
+
 - name: Install base-devel (Manjaro)
   become: true
   package:
