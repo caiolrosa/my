@@ -1,9 +1,9 @@
 ---
-- name: Setup Alacritty
-  become: true
-  package:
-    name: alacritty
-    state: latest
+- import_tasks: install_alacritty_debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- import_tasks: install_alacritty_arch.yml
+  when: ansible_facts.os_family == "Archlinux"
 
 - name: Ensure alacritty configuration directory exists
   file:
