@@ -1,3 +1,4 @@
+let g:ale_disable_lsp = 1
 let g:coc_global_extensions = [
 \ 'coc-yaml',
 \ 'coc-tsserver',
@@ -32,6 +33,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'uiiaoo/java-syntax.vim'
+  Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -85,6 +87,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.config/tmux-status.conf"
 nmap <leader>1 <Plug>AirlineSelectTab1
@@ -103,8 +106,14 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn  <Plug>(coc-rename)
 nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+" >>> Ale config <<< "
+let g:ale_fixers = {
+\ 'java': ['google_java_format', 'uncrustify']
+\}
 
 " >>> NERDTree config <<< "
 let NERDTreeShowHidden=1
