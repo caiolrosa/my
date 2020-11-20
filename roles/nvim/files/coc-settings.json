@@ -4,5 +4,6 @@
   "java.referencesCodeLens.enabled": true,
   "java.implementationsCodeLens.enabled": true,
   "java.autobuild.enabled": true,
-  "java.import.maven.enabled": true
+  "java.import.maven.enabled": true,
+  "diagnostic.displayByAle": true
 }
