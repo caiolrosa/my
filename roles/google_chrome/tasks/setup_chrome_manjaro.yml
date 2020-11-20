@@ -1,3 +1,4 @@
 ---
 - name: Install Google Chrome (Manjaro)
-  command: yay -S google-chrome
+  become: true
+  command: yay -S google-chrome --noconfirm
