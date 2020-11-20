@@ -6,18 +6,22 @@
   when: ansible_facts.os_family == "Archlinux"
 
 - name: Add user to docker group
+  become: true
   user:
     name: "{{ lookup('env', 'USER') }}"
-    groups: docker
+    groups:
+      - docker
     append: true
 
 - name: Ensure docker-compose is installed and available
+  become: true
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
     dest: /usr/local/bin/docker-compose
-    mode: "u+x,g+x"
+    mode: 0755
 
 - name: Start and enable docker service
+  become: true
   service:
     name: docker
     state: started
