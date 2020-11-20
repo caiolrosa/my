@@ -1,0 +1,12 @@
+---
+- name: Install base-devel (Manjaro)
+  become: true
+  package:
+    name: base-devel
+    state: latest
+
+- name: Ensure git is installed
+  become: true
+  package:
+    name: git
+    state: present

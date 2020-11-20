@@ -1,0 +1,6 @@
+---
+- import_tasks: baseline_debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- import_tasks: baseline_manjaro.yml
+  when: ansible_facts.os_family == "Archlinux"
