@@ -1,0 +1,11 @@
+---
+- name: Install direnv
+  become: true
+  package:
+    name: direnv
+    state: present
+
+- name: Setup direnv hook
+  lineinfile:
+    path: $HOME/.profile
+    line: 'eval "$(direnv hook bash)"'
