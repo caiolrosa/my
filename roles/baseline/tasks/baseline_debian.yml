@@ -13,3 +13,4 @@
   loop:
     - git
     - build-essential
+    - curl
