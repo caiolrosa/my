@@ -1,3 +1,14 @@
+let g:coc_global_extensions = [
+\ 'coc-yaml',
+\ 'coc-tsserver',
+\ 'coc-solargraph',
+\ 'coc-json',
+\ 'coc-java',
+\ 'coc-html',
+\ 'coc-go',
+\ 'coc-css'
+\ ]
+
 call plug#begin('~/.vim/plugged')
 
   Plug 'preservim/nerdtree'
@@ -9,7 +20,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'arcticicestudio/nord-vim'
   Plug 'vim-airline/vim-airline'
   Plug 'edkolev/tmuxline.vim'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': { -> coc#util#install() } }
   Plug 'tpope/vim-endwise'
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
