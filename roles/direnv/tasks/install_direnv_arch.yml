@@ -1,0 +1,13 @@
+---
+- name: Check if direnv is already installed
+  stat:
+    path: /usr/local/bin/direnv
+  register: direnv
+
+- name: Install direnv
+  become: true
+  get_url:
+    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv_version }}/direnv.linux-amd64"
+    dest: /usr/local/bin/direnv
+    mode: 0755
+  when: direnv.stat.exists == False
