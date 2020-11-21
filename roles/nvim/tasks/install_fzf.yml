@@ -16,7 +16,7 @@
   become: true
   apt:
     deb: "https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat_{{ bat_version }}_amd64.deb"
-    when: ansible_facts.os_family == "Debian" or
+  when: ansible_facts.os_family == "Debian" or
         ansible_facts.os_family == "Pop!_OS"
 
 - name: Setup bat's syntax highlight color
