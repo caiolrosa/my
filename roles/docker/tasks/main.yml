@@ -1,6 +1,7 @@
 ---
 - import_tasks: setup_docker_debian.yml
-  when: ansible_facts.os_family == "Debian"
+  when: ansible_facts.os_family == "Debian" or
+        ansible_facts.os_family == "Pop!_OS"
 
 - import_tasks: setup_docker_manjaro.yml
   when: ansible_facts.os_family == "Archlinux"

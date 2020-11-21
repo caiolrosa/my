@@ -1,6 +1,7 @@
 ---
 - import_tasks: install_alacritty_debian.yml
-  when: ansible_facts.os_family == "Debian"
+  when: ansible_facts.os_family == "Debian" or
+        ansible_facts.os_family == "Pop!_OS"
 
 - import_tasks: install_alacritty_arch.yml
   when: ansible_facts.os_family == "Archlinux"
