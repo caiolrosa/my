@@ -5,6 +5,7 @@
   vars_files:
     - "{{ playbook_dir }}/vars/external_vars.yml"
   roles:
+    - { role: yay, when: ansible_facts.os_family == "Archlinux" }
     - baseline
     - alacritty
     - nerd_fonts
@@ -14,5 +15,4 @@
     - nvim
     - direnv
     - docker
-    - { role: yay, when: ansible_facts.os_family == "Archlinux" }
     - google_chrome
