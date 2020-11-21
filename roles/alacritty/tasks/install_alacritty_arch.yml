@@ -1,6 +1,0 @@
----
-- name: Setup Alacritty
-  become: true
-  package:
-    name: alacritty
-    state: latest

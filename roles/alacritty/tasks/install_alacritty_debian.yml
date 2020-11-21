@@ -1,5 +1,0 @@
----
-- name: Install alacritty (Debian)
-  become: true
-  apt:
-    deb: "https://github.com/barnumbirr/alacritty-debian/releases/download/v{{ alacritty_version }}/alacritty_{{ alacritty_version }}_amd64_debian_buster.deb"
