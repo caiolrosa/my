@@ -14,3 +14,4 @@
     - git
     - build-essential
     - curl
+    - gnupg
