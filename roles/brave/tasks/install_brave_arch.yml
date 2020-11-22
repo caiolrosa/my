@@ -1,0 +1,5 @@
+---
+- name: Install brave (Arch)
+  package:
+    name: brave-bin
+    state: latest
