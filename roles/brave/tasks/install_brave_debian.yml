@@ -1,19 +1,23 @@
 ---
 - name: Add brave apt key
+  become: true
   apt_key:
     url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
     state: present
 
 - name: Add brave repository
+  become: true
   apt_repository:
     repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
     state: present
 
 - name: Update apt cache
+  become: true
   apt:
     update_cache: yes
 
 - name: Install brave (Debian)
+  become: true
   apt:
     name: brave-browser
     state: latest
