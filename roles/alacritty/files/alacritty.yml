@@ -6,7 +6,7 @@ shell:
   args:
     - -l
     - -c
-    - "tmux attach || tmux"
+    - "tmux attach || tmux -f $HOME/.config/tmux/tmux.conf"
 
 window:
   dynamic_title: true
