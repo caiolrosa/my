@@ -1,0 +1,15 @@
+---
+- name: Create custom plugins directory under oh-my-zsh
+  file:
+    path: $HOME/.oh-my-zsh/custom/plugins
+    state: directory
+
+- name: Clone syntax highlight plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+- name: Clone auto complete plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
