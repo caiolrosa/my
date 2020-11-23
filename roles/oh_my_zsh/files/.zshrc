@@ -22,7 +22,12 @@ plugins=(
   git
   nvm
   z
+  zsh-syntax-highlighting
+  zsh-autosuggestions
 )
+
+# ZSH Autosuggestions config
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4C566A"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.profile

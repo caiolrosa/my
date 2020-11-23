@@ -20,3 +20,5 @@
     src: "{{ role_path }}/files/.zshrc"
     path: $HOME/.zshrc
     state: link
+
+- import_tasks: configure_zsh_plugins.yml
