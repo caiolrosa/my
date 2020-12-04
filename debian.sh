@@ -1,3 +1,5 @@
+set -e
+
 if ! [ -x "$(command -v ansible-playbook)" ]; then
   echo 'Ansible is not installed, installing...'
   sudo apt update
@@ -16,7 +18,7 @@ while true; do
       ansible-galaxy collection install community.crypto
       ansible-playbook gitssh.yml
       break;;
-    [Nn]* ) break::
+    [Nn]* ) break;;
   esac
 done
 

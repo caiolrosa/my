@@ -1,3 +1,5 @@
+set -e
+
 if !command -v ansible-playbook &> /dev/null; then
   echo 'Ansible is not installed, installing...'
   sudo pacman -S ansible
@@ -14,7 +16,7 @@ while true; do
       ansible-galaxy collection install community.crypto
       ansible-playbook gitssh.yml
       break;;
-    [Nn]* ) break::
+    [Nn]* ) break;;
   esac
 done
 
