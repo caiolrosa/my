@@ -7,7 +7,8 @@ let g:coc_global_extensions = [
 \ 'coc-java',
 \ 'coc-html',
 \ 'coc-go',
-\ 'coc-css'
+\ 'coc-css',
+\ 'coc-prettier'
 \ ]
 
 call plug#begin('~/.vim/plugged')
