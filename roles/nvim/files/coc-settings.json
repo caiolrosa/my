@@ -6,5 +6,6 @@
   "java.autobuild.enabled": true,
   "java.import.maven.enabled": true,
   "diagnostic.displayByAle": true,
-  "coc.preferences.formatOnSaveFiletypes": ["typescriptreact", "typescript"]
+  "coc.preferences.formatOnSaveFiletypes": ["typescriptreact", "typescript"],
+  "eslint.autoFixOnSave": true
 }
