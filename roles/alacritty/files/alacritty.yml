@@ -85,12 +85,6 @@ colors:
 cursor:
   style: Beam
 
-mouse:
-  url:
-    launcher:
-      program: open
-      args: []
-
 key_bindings:
   - { key: Copy,                                   action: Copy             }
   - { key: Paste,                                  action: Paste            }
