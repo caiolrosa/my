@@ -25,15 +25,10 @@ require('packer').startup(function()
   use 'dense-analysis/ale'
   use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
 
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 end)
 
 require('plugins.airline')
 require('plugins.coc')
 require('plugins.fzf')
 require('plugins.nerd_tree')
-require('plugins.treesitter')
 require('plugins.vim_close_tag')
