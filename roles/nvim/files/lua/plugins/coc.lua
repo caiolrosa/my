@@ -12,7 +12,7 @@ vim.g.coc_global_extensions = {
 }
 
 vim.g.ale_disable_lsp = true
-vim.api.nvim_set_keymap('i', '<C-S-p>', 'coc#refresh()', { silent = true, expr = true })
+vim.cmd('inoremap <silent><expr> <c-space> coc#refresh()')
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
