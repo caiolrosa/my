@@ -11,7 +11,6 @@ require('packer').startup(function()
   use 'junegunn/fzf.vim'
   use 'arcticicestudio/nord-vim'
   use 'vim-airline/vim-airline'
-  use 'edkolev/tmuxline.vim'
   use { 'neoclide/coc.nvim', branch = 'release', run = function() vim.fn['coc#util#install']() end }
   use 'tpope/vim-endwise'
   use 'leafgarland/typescript-vim'
