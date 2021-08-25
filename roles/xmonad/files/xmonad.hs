@@ -283,7 +283,7 @@ main = do
 			, ppHidden          = xmobarColor "#8FbCBB" ""
 			, ppHiddenNoWindows = xmobarColor "#81A1C1" ""
 			, ppTitle           = xmobarColor "#ECEFF4" "" . shorten 30
-			, ppSep             = "    <fc=#4C566A>|</fc>    "
+			, ppSep             = "   <fc=#4C566A>|</fc>   "
 			, ppWsSep           = "    "
 			, ppOrder           = \(ws:l:t:_) -> [ws, l, t]
 			}
