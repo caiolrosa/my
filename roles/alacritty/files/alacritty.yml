@@ -3,6 +3,10 @@ background_opacity: 0.95
 
 shell:
   program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux -f $HOME/.config/tmux/tmux.conf"
 
 window:
   dynamic_title: true
