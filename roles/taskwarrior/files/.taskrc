@@ -38,3 +38,5 @@ uda.source.default=task_warrior
 uda.type.type=string
 uda.type.label=Type
 uda.type.default=task
+
+uda.taskwarrior-tui.task-report.next.filter=
