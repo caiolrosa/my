@@ -24,6 +24,8 @@ require('packer').startup(function()
   use 'tpope/vim-surround'
   use 'dense-analysis/ale'
   use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
+  use 'vimwiki/vimwiki'
+  use 'mhinz/vim-startify'
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
@@ -35,3 +37,4 @@ require('plugins.fzf')
 require('plugins.nerd_tree')
 require('plugins.treesitter')
 require('plugins.vim_close_tag')
+require('plugins.startify')
