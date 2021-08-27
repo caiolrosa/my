@@ -16,6 +16,7 @@ import XMonad.Util.Run (spawnPipe, hPutStrLn)
 
 import XMonad.Layout.Spacing
 import XMonad.Layout.LayoutModifier
+import XMonad.Layout.Fullscreen
 
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, xmobarPP, wrap, xmobarColor, shorten, PP(..))
@@ -261,7 +262,7 @@ myStartupHook = do
 main = do
 	xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobar.config"
 	xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobar.config"
-	xmonad $ ewmh def
+	xmonad $ ewmh $ fullscreenSupport def
 		{ terminal           = myTerminal
 		, focusFollowsMouse  = myFocusFollowsMouse
 		, clickJustFocuses   = myClickJustFocuses
