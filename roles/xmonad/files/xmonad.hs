@@ -13,6 +13,7 @@ import System.Exit
 
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run (spawnPipe, hPutStrLn)
+import XMonad.Util.EZConfig (additionalKeysP)
 
 import XMonad.Layout.Spacing
 import XMonad.Layout.LayoutModifier
@@ -150,9 +151,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
     --
-    [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    [((m .|. mod1Mask, k), windows $ f i) -- Replace 'mod1Mask' with your mod key of choice.
+        | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     ++
 
     --
@@ -271,7 +272,6 @@ main = do
 		, workspaces         = myWorkspaces
 		, normalBorderColor  = myNormalBorderColor
 		, focusedBorderColor = myFocusedBorderColor
-		, keys               = myKeys
 		, mouseBindings      = myMouseBindings
 		, layoutHook         = avoidStruts $ myLayout
 		, manageHook         = myManageHook <+> manageDocks
@@ -289,7 +289,7 @@ main = do
 			, ppOrder           = \(ws:l:t:_) -> [ws, l, t]
 			}
 		, startupHook        = myStartupHook
-		}
+		} `additionalKeysP` myKeys
 
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
