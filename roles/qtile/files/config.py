@@ -41,6 +41,13 @@ keys = [
     Key([mod, "shift"], "w", lazy.function(window_to_previous_screen), desc="Switch window to previous screen"),
     Key([mod, "shift"], "e", lazy.function(window_to_next_screen), desc="Switch window to next screen"),
 
+    # Lock screen
+    Key([mod], "Escape", lazy.spawn("betterlockscreen -l dim")),
+
+    # Toggle keyboard layout
+    Key([mod, "control"], "space", lazy.spawn("{}/.config/qtile/toggle_keyboard_layout.sh".format(os.path.expanduser('~'))),
+        desc="Toggle keyboard layout"),
+
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
@@ -76,8 +83,6 @@ keys = [
 
     Key([mod], "q", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
     
     # Audio keybinds
     Key([mod], "v", lazy.spawn("amixer -q set Master 5%+"), desc="Increase volume"),
