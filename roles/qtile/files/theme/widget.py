@@ -26,7 +26,7 @@ def main_widgets():
             filename = "~/.config/qtile/arch_icon.png",
             margin_y = 2
         ),
-        widget.Spacer(length = 2),
+        widget.Spacer(length = 6),
         widget.GroupBox(
             active = theme.colors["accent_green"],
             inactive = theme.colors["darker_blue"],
@@ -43,20 +43,14 @@ def main_widgets():
             linewidth = 2,
             size_percent = 65
         ),
-        widget.Spacer(length = 6),
         widget.WindowName(
             foreground = theme.colors["purple"],
-            max_chars = 45
-        ),
-        widget.TextBox(
-            text = "",
-            padding = 3,
-            fontsize = 24,
-            foreground = theme.colors["accent_green"]
+            max_chars = 45,
+            padding = 12
         ),
         widget.CPU(
             foreground = theme.colors["accent_green"],
-            format = "{load_percent}%",
+            format = "<span font_family='Font Awesome 5 Free'></span> {load_percent}%",
             padding = 3
         ),
         widget.Sep(
@@ -65,15 +59,21 @@ def main_widgets():
             padding = 24,
             size_percent = 65
         ),
-        widget.TextBox(
-            text = "",
-            foreground = theme.colors["accent_blue"],
-            fontsize = 24,
-            padding = 3
-        ),
         widget.Memory(
             foreground = theme.colors["accent_blue"],
-            format = "{MemPercent}%",
+            format = "<span font_family='Font Awesome 5 Free'></span> {MemPercent}%",
+            padding = 3
+        ),
+        widget.Sep(
+            foreground = theme.colors["dark_gray"],
+            linewidth = 2,
+            padding = 24,
+            size_percent = 65
+        ),
+        widget.Wlan(
+            foreground = theme.colors["darker_blue"],
+            interface = "wlo1",
+            format = "<span font_family='Font Awesome 5 Free'></span> {percent:2.0%}",
             padding = 3
         ),
         widget.Sep(
@@ -103,15 +103,9 @@ def main_widgets():
             size_percent = 65,
             padding = 24
         ),
-        widget.TextBox(
-            text = "",
-            padding = 3,
-            fontsize = 24,
-            foreground = theme.colors["orange"]
-        ),
         widget.Clock(
             foreground = theme.colors["orange"],
-            format = "%H:%M",
+            format = "<span font_family='Font Awesome 5 Free'></span> %H:%M",
             padding = 3
         ),
         widget.Sep(
@@ -120,15 +114,9 @@ def main_widgets():
             size_percent = 65,
             padding = 24
         ),
-        widget.TextBox(
-            text = "",
-            padding = 3,
-            fontsize = 24,
-            foreground = theme.colors["darkest_blue"]
-        ),
         widget.Clock(
             foreground = theme.colors["darkest_blue"],
-            format = "%a %b %_d",
+            format = "<span font_family='Font Awesome 5 Free'></span> %a %b %_d",
             padding = 3
         ),
         widget.Sep(
@@ -153,7 +141,7 @@ def main_widgets():
         ),
         widget.TextBox(
             foreground = theme.colors['light_gray'],
-            text = "{} {}".format(os.uname().sysname, os.uname().nodename),
+            text = "<span font_family='Font Awesome 5 Free'></span> {} {}".format(os.uname().sysname, os.uname().nodename),
             padding = 3
         ),
         widget.Spacer(length = 12)
