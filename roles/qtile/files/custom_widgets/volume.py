@@ -64,13 +64,13 @@ class Volume(base._TextBox):
         volume_icon = ''
 
         if self.volume <= 0:
-            volume_icon = ""
+            volume_icon = "<span font_family='Font Awesome 5 Free'></span>"
         elif self.volume <= 25:
-            volume_icon = ""
+            volume_icon = "<span font_family='Font Awesome 5 Free'></span>"
         elif self.volume < 50:
-            volume_icon = ""
+            volume_icon = "<span font_family='Font Awesome 5 Free'></span>"
         elif self.volume >= 50:
-            volume_icon = ""
+            volume_icon = "<span font_family='Font Awesome 5 Free'></span>"
 
         self.text = '{} {}%'.format(volume_icon, self.volume)
 
