@@ -1,10 +1,10 @@
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
-from custom_widgets import volume
+from theme import theme, widget
 
 import os
 import subprocess
@@ -83,27 +83,12 @@ for i, group in enumerate(groups, 1):
         #     desc="move focused window to group {}".format(i.name)),
     ])
 
-colors = {
-    "darkest_gray": "#2e3440",
-    "darker_gray": "#3b4252",
-    "dark_gray": "#434c5e",
-    "medium_gray": "#4c566a",
-    "light_gray": "#d8dee9",
-    "accent_blue": "#88c0d0",
-    "accent_green": "#8fbcbb",
-    "light_green": "#a3be8c",
-    "darker_blue": "#81a1c1",
-    "darkest_blue": "#5e81ac",
-    "purple": "#b48ead",
-    "orange": "#d08770",
-    "yellow": "#ebcb8b"
-}
 
 layouts = [
     layout.Columns(
         margin = 12,
         border_width = 2,
-        border_focus = colors["accent_green"],
+        border_focus = theme.colors["accent_green"],
         border_on_sigle = True
     ),
     # layout.Max(),
@@ -124,74 +109,12 @@ widget_defaults = dict(
     font='Ubuntu Bold',
     fontsize=13,
     padding=6,
-    background=colors["darkest_gray"]
+    background=theme.colors["darkest_gray"]
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Spacer(length = 12),
-                widget.Image(
-                    filename = "~/.config/qtile/arch_icon.png",
-                ),
-                widget.Spacer(length = 6),
-                widget.GroupBox(
-                    active = colors["accent_green"],
-                    inactive = colors["darker_blue"],
-                    block_highlight_text_color = colors["darkest_gray"],
-                    highlight_color = colors["accent_blue"],
-                    highlight_method = "block",
-                    this_current_screen_border = colors["accent_blue"],
-                    this_current_border = colors["accent_blue"],
-                    foreground = colors["light_gray"],
-                    background = colors["darkest_gray"]
-                ),
-                widget.Sep(
-                    foreground = colors["dark_gray"],
-                    linewidth = 2
-                ),
-                widget.Spacer(length = 6),
-                widget.WindowName(
-                    foreground = colors["purple"]
-                ),
-                widget.CPU(
-                    foreground = colors["accent_green"],
-                    format = " {load_percent}%"
-                ),
-                widget.Memory(
-                    foreground = colors["accent_blue"],
-                    format = " {MemPercent}%"
-                ),
-                volume.Volume(
-                    foreground = colors["light_green"],
-                ),
-                widget.Clock(
-                    foreground = colors["orange"],
-                    format=" %H:%M"
-                ),
-                widget.Clock(
-                    foreground = colors["darkest_blue"],
-                    format=" %a %b %_d"
-                ),
-                widget.CheckUpdates(
-                    display_format = " {updates} updates",
-                    no_update_string = " 0 updates",
-                    colour_have_updates = colors["yellow"],
-                    colour_no_updates = colors["darker_blue"],
-                    update_interval = 1800
-                ),
-                widget.TextBox(
-                    foreground = colors['light_gray'],
-                    text = "{} {}".format(os.uname().sysname, os.uname().nodename)
-                ),
-                widget.Spacer(length = 8)
-            ],
-            24,
-        ),
-    ),
-]
+screens = [Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24)),
+           Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24))]
 
 # Drag floating layouts.
 mouse = [
