@@ -1,5 +1,6 @@
 from typing import List  # noqa: F401
 
+from libqtile import qtile
 from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
@@ -12,6 +13,18 @@ import subprocess
 mod = "mod1"
 terminal = "alacritty"
 
+def window_to_previous_screen(qtile):
+    i = qtile.screens.index(qtile.current_screen)
+    if i != 0:
+        group = qtile.screens[i - 1].group.name
+        qtile.current_window.togroup(group)
+
+def window_to_next_screen(qtile):
+    i = qtile.screens.index(qtile.current_screen)
+    if i + 1 != len(qtile.screens):
+        group = qtile.screens[i + 1].group.name
+        qtile.current_window.togroup(group)
+
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -19,7 +32,14 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
 
+    # Launch dmenu
     Key([mod], "space", lazy.spawn("dmenu_run"), desc="Spawn dmenu"),
+
+    # Switch screens
+    Key([mod], "w", lazy.to_screen(0), desc='Keyboard focus to monitor 1'),
+    Key([mod], "e", lazy.to_screen(1), desc='Keyboard focus to monitor 2'),
+    Key([mod, "shift"], "w", lazy.function(window_to_previous_screen), desc="Switch window to previous screen"),
+    Key([mod, "shift"], "e", lazy.function(window_to_next_screen), desc="Switch window to next screen"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -71,22 +91,18 @@ groups = [Group(i) for i in group_names]
 for i, group in enumerate(groups, 1):
     keys.extend([
         # mod1 + letter of group = switch to group
-        Key([mod], str(i), lazy.group[group.name].toscreen(),
+        Key([mod], str(i), lazy.group[group.name].toscreen(toggle = False),
             desc="Switch to group {}".format(group.name)),
 
         # mod1 + shift + letter of group = switch to & move focused window to group
         Key([mod, "shift"], str(i), lazy.window.togroup(group.name, switch_group=True),
             desc="Switch to & move focused window to group {}".format(group.name)),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        #     desc="move focused window to group {}".format(i.name)),
     ])
 
 
 layouts = [
     layout.Columns(
-        margin = 12,
+        margin = 18,
         border_width = 2,
         border_focus = theme.colors["accent_green"],
         border_on_sigle = True

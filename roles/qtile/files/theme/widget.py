@@ -33,8 +33,11 @@ def main_widgets():
             block_highlight_text_color = theme.colors["darkest_gray"],
             highlight_color = theme.colors["accent_blue"],
             highlight_method = "block",
+            this_screen_border = theme.colors["darkest_blue"],
             this_current_screen_border = theme.colors["accent_blue"],
             this_current_border = theme.colors["accent_blue"],
+            other_screen_border = theme.colors["dark_gray"],
+            other_current_screen_border = theme.colors["dark_gray"],
             foreground = theme.colors["light_gray"],
             background = theme.colors["darkest_gray"]
         ),
