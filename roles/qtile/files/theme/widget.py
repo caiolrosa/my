@@ -24,8 +24,9 @@ def main_widgets():
         widget.Spacer(length = 12),
         widget.Image(
             filename = "~/.config/qtile/arch_icon.png",
+            margin_y = 2
         ),
-        widget.Spacer(length = 6),
+        widget.Spacer(length = 2),
         widget.GroupBox(
             active = theme.colors["accent_green"],
             inactive = theme.colors["darker_blue"],
