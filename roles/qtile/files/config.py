@@ -107,9 +107,10 @@ for i, group in enumerate(groups, 1):
 
 layouts = [
     layout.Columns(
-        margin = 18,
+        margin = [18, 0, 18, 18],
         border_width = 2,
         border_focus = theme.colors["accent_green"],
+        border_focus_stack = theme.colors["accent_green"],
         border_on_sigle = True
     ),
     # layout.Max(),
@@ -134,8 +135,10 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24)),
-           Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24))]
+screens = [Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24),
+                  right = bar.Gap(18)),
+           Screen(top = bar.Bar(widgets = widget.main_widgets(), size = 24),
+                  right = bar.Gap(18))]
 
 # Drag floating layouts.
 mouse = [
