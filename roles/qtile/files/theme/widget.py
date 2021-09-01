@@ -50,7 +50,7 @@ def main_widgets():
         ),
         widget.CPU(
             foreground = theme.colors["accent_green"],
-            format = "<span font_family='Font Awesome 5 Free'></span> {load_percent}%",
+            format = "<span font_family='Font Awesome 5 Free'></span> {load_percent:0.0f}%",
             padding = 3
         ),
         widget.Sep(
@@ -61,7 +61,7 @@ def main_widgets():
         ),
         widget.Memory(
             foreground = theme.colors["accent_blue"],
-            format = "<span font_family='Font Awesome 5 Free'></span> {MemPercent}%",
+            format = "<span font_family='Font Awesome 5 Free'></span> {MemPercent:0.0f}%",
             padding = 3
         ),
         widget.Sep(
