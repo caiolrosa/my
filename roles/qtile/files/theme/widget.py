@@ -21,7 +21,7 @@ class BatteryFormat():
 
 def main_widgets():
     return [
-        widget.Spacer(length = 12),
+        widget.Spacer(length = 18),
         widget.Image(
             filename = "~/.config/qtile/arch_icon.png",
             margin_y = 2
@@ -147,5 +147,5 @@ def main_widgets():
             text = "<span font_family='Font Awesome 5 Free'></span> {} {}".format(os.uname().sysname, os.uname().nodename),
             padding = 3
         ),
-        widget.Spacer(length = 12)
+        widget.Spacer(length = 18)
     ]
