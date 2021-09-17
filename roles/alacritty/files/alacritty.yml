@@ -38,7 +38,7 @@ font:
 
 colors:
   primary:
-    background: '#0F1114'
+    background: '#2e3440'
     foreground: '#d8dee9'
     dim_foreground: '#a5abb6'
   cursor:

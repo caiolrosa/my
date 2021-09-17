@@ -24,7 +24,6 @@ vim.wo.relativenumber = true
 vim.wo.wrap = false
 vim.bo.syntax = 'ON'
 vim.opt.termguicolors = true
-vim.cmd('colorscheme nord')
 vim.cmd('filetype plugin indent on')
 
 vim.api.nvim_set_keymap('n', '<C-j>', ':bprevious<CR>', { noremap = true, silent = true })
