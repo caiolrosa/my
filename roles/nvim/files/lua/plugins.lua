@@ -24,6 +24,7 @@ require('packer').startup(function()
 
 end)
 
+require('plugins.colorscheme')
 require('plugins.line')
 require('plugins.tree')
 require('plugins.telescope')
