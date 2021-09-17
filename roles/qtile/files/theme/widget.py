@@ -51,6 +51,16 @@ def main_widgets():
             max_chars = 45,
             padding = 12
         ),
+        widget.KeyboardLayout(
+            configured_keyboards = ['us', 'br'],
+            foreground = theme.colors["darkest_blue"],
+        ),
+        widget.Sep(
+            foreground = theme.colors["dark_gray"],
+            linewidth = 2,
+            size_percent = 65,
+            padding = 24
+        ),
         widget.CPU(
             foreground = theme.colors["accent_green"],
             format = "<span font_family='Font Awesome 5 Free'></span> {load_percent:0.0f}%",

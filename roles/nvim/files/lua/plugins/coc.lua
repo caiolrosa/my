@@ -1,12 +1,11 @@
 vim.g.coc_global_extensions = {
+  'coc-sh',
   'coc-yaml',
   'coc-tsserver',
   'coc-solargraph',
   'coc-json',
   'coc-java',
-  'coc-html',
   'coc-go',
-  'coc-css',
   'coc-prettier',
   'coc-eslint',
   'coc-rust-analyzer'
