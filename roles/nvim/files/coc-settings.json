@@ -7,5 +7,6 @@
   "java.import.maven.enabled": true,
   "diagnostic.displayByAle": true,
   "coc.preferences.formatOnSaveFiletypes": ["typescriptreact", "typescript"],
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "rust-analyzer.checkOnSave.command": "clippy"
 }
