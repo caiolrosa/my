@@ -3,21 +3,10 @@ require('autoload_packer')
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
-  use 'preservim/nerdtree'
-  use 'Xuyuanp/nerdtree-git-plugin'
-  use 'tiagofumo/vim-nerdtree-syntax-highlight'
-  use 'ryanoasis/vim-devicons'
-  use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
-  use 'junegunn/fzf.vim'
-  use 'arcticicestudio/nord-vim'
-  use 'vim-airline/vim-airline'
+  use 'shaunsingh/nord.nvim'
   use 'edkolev/tmuxline.vim'
   use { 'neoclide/coc.nvim', branch = 'release', run = function() vim.fn['coc#util#install']() end }
   use 'tpope/vim-endwise'
-  use 'leafgarland/typescript-vim'
-  use 'peitalin/vim-jsx-typescript'
-  use { 'styled-components/vim-styled-components', branch = 'main' }
-  use 'jparise/vim-graphql'
   use 'Raimondi/delimitMate'
   use 'alvan/vim-closetag'
   use 'tpope/vim-fugitive'
@@ -28,13 +17,17 @@ require('packer').startup(function()
   use 'mhinz/vim-startify'
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+  use { 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' }
+  use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }
+  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
 end)
 
-require('plugins.airline')
+require('plugins.line')
+require('plugins.tree')
+require('plugins.telescope')
 require('plugins.coc')
-require('plugins.fzf')
-require('plugins.nerd_tree')
 require('plugins.treesitter')
 require('plugins.vim_close_tag')
 require('plugins.startify')

@@ -8,11 +8,14 @@ vim.g.coc_global_extensions = {
   'coc-go',
   'coc-css',
   'coc-prettier',
-  'coc-eslint'
+  'coc-eslint',
+  'coc-rust-analyzer'
 }
 
 vim.g.ale_disable_lsp = true
+
 vim.cmd('inoremap <silent><expr> <c-space> coc#refresh()')
+
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
