@@ -25,7 +25,7 @@ terminal=(
 )
 
 terminal_title="Which terminal tools do you want to install?"
-terminal_selection=$(yggui/target/release/yggui checklist "${terminal_title}" ${terminal[@]})
+terminal_selection=($(yggui/target/release/yggui checklist "${terminal_title}" ${terminal[@]}))
 
 dev=(
 	direnv "Direnv"
@@ -35,7 +35,7 @@ dev=(
 )
 
 dev_title="Which development tools do you want to install?"
-dev_selection=$(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]})
+dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
 
 wms=(
 	qtile "Qtile"
@@ -44,7 +44,7 @@ wms=(
 )
 
 wms_title="Which window managers do you want to install?"
-wms_selection=$(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]})
+wms_selection=($(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]}))
 
 softwares=(
 	brave "Brave"
@@ -53,14 +53,14 @@ softwares=(
 )
 
 software_title="Which software do you want to install?"
-software_selection=$(yggui/target/release/yggui checklist "${software_title}" ${softwares[@]})
+software_selection=($(yggui/target/release/yggui checklist "${software_title}" ${softwares[@]}))
 
 choices=(${terminal_selection[@]} ${dev_selection[@]} ${wms_selection[@]} ${software_selection[@]})
 
 IFS=""
 
-for choice in ${choices}; do
-	case choice in
+for choice in ${choices[@]}; do
+	case $choice in
 		("alacritty") install_alacritty ;;
 		("oh_my_zsh") install_oh_my_zsh ;;
 		("tmux") install_tmux ;;
