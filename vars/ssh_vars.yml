@@ -1,3 +1,0 @@
-ssh_path: $HOME/.ssh
-ssh_size: 4096 # This only applies to RSA keys
-ssh_type: ed25519

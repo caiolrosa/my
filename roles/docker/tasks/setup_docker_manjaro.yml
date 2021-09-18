@@ -1,6 +1,0 @@
----
-- name: Install docker (Manjaro)
-  become: true
-  package:
-    name: docker
-    state: latest
