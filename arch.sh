@@ -61,19 +61,19 @@ IFS=""
 
 for choice in ${choices[@]}; do
 	case $choice in
-		("alacritty") install_alacritty ;;
-		("oh_my_zsh") install_oh_my_zsh ;;
-		("tmux") install_tmux ;;
-		("nerd_fonts") install_nerd_fonts ;;
-		("direnv") install_direnv ;;
-		("taskwarrior") install_taskwarrior ;;
-		("nvim") install_nvim ;;
-		("asdf") install_asdf ;;
-		("qtile") install_qtile ;;
-		("xmonad") install_xmonad ;;
-		("betterlockscreen") install_betterlockscreen ;;
-		("brave") install_brave ;;
-		("google_chrome") install_google_chrome ;;
-		("docker") install_docker ;;
+		("alacritty") bash arch/install.sh alacritty ;;
+		("oh_my_zsh") bash arch/install.sh oh_my_zsh ;;
+		("tmux") bash arch/install.sh tmux ;;
+		("nerd_fonts") bash arch/install.sh nerd_fonts ;;
+		("direnv") bash arch/install.sh direnv ;;
+		("taskwarrior") bash arch/install.sh taskwarrior ;;
+		("nvim") bash arch/install.sh nvim ;;
+		("asdf") bash arch/install.sh asdf ;;
+		("qtile") bash arch/install.sh qtile ;;
+		("xmonad") bash arch/install.sh xmonad ;;
+		("betterlockscreen") bash arch/install.sh betterlockscreen ;;
+		("brave") bash arch/install.sh brave ;;
+		("google_chrome") bash arch/install.sh google_chrome ;;
+		("docker") bash arch/install.sh docker ;;
 	esac
 done
