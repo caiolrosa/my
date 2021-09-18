@@ -46,7 +46,7 @@ wms=(
 wms_title="Which window managers do you want to install?"
 wms_selection=$(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]})
 
-software=(
+softwares=(
 	brave "Brave"
 	google_chrome "Google Chrome"
 	docker "Docker"
