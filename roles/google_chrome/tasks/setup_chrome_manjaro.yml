@@ -1,5 +1,0 @@
----
-- name: Install Google Chrome (Arch)
-  yay:
-    name: google-chrome
-    state: latest
