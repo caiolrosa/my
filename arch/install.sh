@@ -1,5 +1,22 @@
 alacritty() {
-	echo Alacritty
+	if command -v alacritty &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S alacritty
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	if [ -d "$HOME/.config/alacritty" ]; then
+		mv $HOME/.config/alacritty $HOME/.config/alacritty_bak
+		ln -s $HOME/yggdrasil/alacritty $HOME/.config
+		return 3
+	fi
+
+	ln -s $HOME/yggdrasil/alacritty $HOME/.config
+	return 0
 }
 
 oh_my_zsh() {
@@ -23,7 +40,24 @@ taskwarrior() {
 }
 
 nvim() {
-	echo Nvim
+	if command -v nvim &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S neovim
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+	
+	if [ -d "$HOME/.config/nvim" ]; then
+		mv $HOME/.config/nvim $HOME/.config/nvim_bak
+		ln -s $HOME/yggdrasil/nvim $HOME/.config
+		return 3
+	fi
+
+	ln -s  $HOME/yggdrasil/nvim $HOME/.config
+	return 0
 }
 
 asdf() {
