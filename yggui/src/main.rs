@@ -15,14 +15,22 @@ fn main() {
     }
 
     match args.get(1).map(|a| a.as_str()) {
-        Some("checklist") => software_checklist(&args[2..]),
+        Some("checklist") => {
+            if args.len() <= 3 {
+                eprintln!("Checklist command requires arguments [title] [choices]");
+                process::exit(1)
+            }
+
+            software_checklist(&args[2],&args[3..])
+        }
+        Some("confirm") => confirm_action(args.get(2)),
         Some(cmd) => { println!("Command {} not found", cmd); process::exit(1) },
         None => { eprintln!("Failed to parse the command"); process::exit(1) },
     }
 }
 
-fn software_checklist(args: &[String]) {
-    let rows: Vec<_> = args.chunks_exact(2).collect();
+fn software_checklist(title: &str, choices: &[String]) {
+    let rows: Vec<_> = choices.chunks_exact(2).collect();
     if rows.is_empty() {
         eprintln!("Checklist requires parameters in pairs [ID, Name]"); process::exit(1);
     }
@@ -34,7 +42,7 @@ fn software_checklist(args: &[String]) {
         };
     }).collect();
 
-    let selected_indexes = widgets::checklist("Which software do you want to install", options);
+    let selected_indexes = widgets::checklist(title, options);
 
     let selections: Vec<_> = match selected_indexes {
         Some(indexes) => indexes.iter().map(|i| rows.get(*i).unwrap()).collect(),
@@ -42,5 +50,17 @@ fn software_checklist(args: &[String]) {
     };
 
     let ids: Vec<_> = selections.iter().map(|s| s.first().unwrap().clone()).collect();
-    println!("{}", ids.join(";"))
+    println!("{}", ids.join(","))
+}
+
+fn confirm_action(title: Option<&String>) {
+    match title {
+        Some(title) => {
+            match widgets::confirm(title.as_str()) {
+                Some(choice) => println!("{}", choice.to_string()),
+                None => { eprintln!("Failed to get user confirmation"); process::exit(1) }
+            }
+        },
+        None => { eprintln!("Confirm requires 1 argument [title]"); process::exit(1) },
+    }
 }
