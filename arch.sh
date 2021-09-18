@@ -15,6 +15,8 @@ if [ $? -ne 0 ]; then
 	echo "Failed installing baseline packages"; exit 1
 fi
 
+IFS=","
+
 terminal=(
 	alacritty "Alacritty"
 	oh_my_zsh "Oh My Zsh"
@@ -23,7 +25,7 @@ terminal=(
 )
 
 terminal_title="Which terminal tools do you want to install?"
-terminal_selection=$(yggui/target/release/yggui checklist ${terminal_title} ${terminal})
+terminal_selection=$(yggui/target/release/yggui checklist "${terminal_title}" ${terminal[@]})
 
 dev=(
 	direnv "Direnv"
@@ -33,7 +35,7 @@ dev=(
 )
 
 dev_title="Which development tools do you want to install?"
-dev_selection=$(yggui/target/release/yggui checklist ${dev_title} ${dev})
+dev_selection=$(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]})
 
 wms=(
 	qtile "Qtile"
@@ -42,7 +44,7 @@ wms=(
 )
 
 wms_title="Which window managers do you want to install?"
-wms_selection=$(yggui/target/release/yggui checklist ${wms_title} ${wms})
+wms_selection=$(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]})
 
 software=(
 	brave "Brave"
@@ -51,9 +53,11 @@ software=(
 )
 
 software_title="Which software do you want to install?"
-software_selection=$(yggui/target/release/yggui checklist ${software_title} ${softwares})
+software_selection=$(yggui/target/release/yggui checklist "${software_title}" ${softwares[@]})
 
 choices=(${terminal_selection[@]} ${dev_selection[@]} ${wms_selection[@]} ${software_selection[@]})
+
+IFS=""
 
 for choice in ${choices}; do
 	case choice in
