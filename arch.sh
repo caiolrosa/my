@@ -59,15 +59,33 @@ choices=(${terminal_selection[@]} ${dev_selection[@]} ${wms_selection[@]} ${soft
 
 IFS=""
 
+declare -A RESULTS
+RESULTS=([errors]="" [skipped]="" [backup]="")
+
+handle_result() {
+	case $1 in
+		0) echo "$2 installed successfully" ;;
+		1) RESULTS[errors]+=" $2" ;;
+		2) RESULTS[skipped]+=" $2" ;;
+		3) RESULTS[backup]+=" $2" ;;
+	esac
+}
+
 for choice in ${choices[@]}; do
 	case $choice in
-		("alacritty") bash arch/install.sh alacritty ;;
+		("alacritty")
+			status=$(bash arch/install.sh alacritty)
+			handle_result $status "Alacritty"
+			;;
 		("oh_my_zsh") bash arch/install.sh oh_my_zsh ;;
 		("tmux") bash arch/install.sh tmux ;;
 		("nerd_fonts") bash arch/install.sh nerd_fonts ;;
 		("direnv") bash arch/install.sh direnv ;;
 		("taskwarrior") bash arch/install.sh taskwarrior ;;
-		("nvim") bash arch/install.sh nvim ;;
+		("nvim")
+			status=$(bash arch/install.sh nvim)
+			handle_result $status "Neovim"
+			;;
 		("asdf") bash arch/install.sh asdf ;;
 		("qtile") bash arch/install.sh qtile ;;
 		("xmonad") bash arch/install.sh xmonad ;;
@@ -76,4 +94,22 @@ for choice in ${choices[@]}; do
 		("google_chrome") bash arch/install.sh google_chrome ;;
 		("docker") bash arch/install.sh docker ;;
 	esac
+done
+
+echo "ERRORS:"
+errs=(${RESULTS[errors]})
+for err in ${errs}; do
+	echo -e "\t${err}"
+done
+
+echo "SKIPPED:"
+skipped=(${RESULTS[skipped]})
+for skip in ${skipped}; do
+	echo -e "\t${skip}"
+done
+
+echo "BACKUP:"
+backup=(${RESULTS[backup]})
+for back in ${backup}; do
+	echo -e "\t${back}"
 done
