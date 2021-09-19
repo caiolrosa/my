@@ -1,16 +1,16 @@
 #! /bin/bash
 
 should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
-if [ $should_update -eq 'true' ]; then
-	sudo pacman -Syu --no-confirm
+if [ $should_update == "true" ]; then
+	sudo pacman -Syu --noconfirm
 fi
 
-sudo pacman --no-confirm -S yay
+sudo pacman --noconfirm -S yay
 if [ $? -ne 0 ]; then
 	echo "Failed installing yay"; exit 1
 fi
 
-yay --no-confirm -S base-devel
+yay --noconfirm -S base-devel
 if [ $? -ne 0 ]; then
 	echo "Failed installing baseline packages"; exit 1
 fi
