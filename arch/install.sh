@@ -3,7 +3,7 @@ alacritty() {
 		return 2
 	fi
 
-	yay --no-confirm -S alacritty
+	yay --noconfirm -S alacritty
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -28,7 +28,7 @@ tmux() {
 		return 2
 	fi
 
-	yay --no-confirm -S tmux
+	yay --noconfirm -S tmux
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -57,7 +57,7 @@ direnv() {
 		return 2
 	fi
 
-	yay --no-confirm -S direnv
+	yay --noconfirm -S direnv
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -71,7 +71,7 @@ taskwarrior() {
 		return 1
 	fi
 
-	yay --no-confirm -S task
+	yay --noconfirm -S task
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -93,7 +93,7 @@ nvim() {
 		return 2
 	fi
 
-	yay --no-confirm -S neovim
+	yay --noconfirm -S neovim
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -118,7 +118,7 @@ qtile() {
 		return 2
 	fi
 
-	yay --no-confirm -S qtile python-setuptools
+	yay --noconfirm -S qtile python-setuptools
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -139,7 +139,7 @@ xmonad() {
 		return 2
 	fi
 
-	yay --no-confirm -S xmonad xmobar
+	yay --noconfirm -S xmonad xmobar
 
 	if [ $? -ne 0 ]; then
 		return 1
