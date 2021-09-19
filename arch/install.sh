@@ -24,19 +24,68 @@ oh_my_zsh() {
 }
 
 tmux() {
-	echo Tmux
+	if command -v tmux &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S tmux
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	if [ -d "$HOME/.config/tmux" ]; then
+		mv $HOME/.config/tmux $HOME/.config/tmux_bak
+		ln -s $HOME/yggdrasil/tmux $HOME/.config
+		return 3
+	fi
+
+	ln -s $HOME/ygdrasil/tmux $HOME/.config
 }
 
 nerd_fonts() {
-	echo Nerd Fonts
+	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip"
+	mkdir -p /usr/share/fonts/TTF
+	unzip SourceCodePro.zip -d /usr/share/fonts/TTF
+	rm SourceCodePro.zip
+
+	return 0
 }
 
 direnv() {
-	echo Direnv
+	if command -v direnv &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S direnv
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	return 0
 }
 
 taskwarrior() {
-	echo Taskwarrior
+	if command -v task &> /dev/null; then
+		return 1
+	fi
+
+	yay --no-confirm -S task
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	if [ -f "$HOME/.taskrc" ]; then
+		mv $HOME/.taskrc $HOME/.taskrc.bak
+		ln -s $HOME/yggdrasil/taskwarrior/.taskrc $HOME/.taskrc
+		return 3
+	fi
+
+	ln -s $HOME/yggdrasil/taskwarrior/.taskrc $HOME/.taskrc
+
+	return 0
 }
 
 nvim() {
@@ -65,11 +114,45 @@ asdf() {
 }
 
 qtile() {
-	echo Qtile
+	if command -v qtile &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S qtile python-setuptools
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	if [ -d "$HOME/.config/qtile" ]; then
+		mv $HOME/.config/qtile $HOME/.config/qtile_bak
+		ln -s $HOME/yggdrasil/qtile $HOME/.config
+		return 3
+	fi
+
+	ln -s $HOME/yggdrasil/qtile $HOME/.config
+	return 0
 }
 
 xmonad() {
-	echo Xmonad
+	if command -v xmonad &> /dev/null; then
+		return 2
+	fi
+
+	yay --no-confirm -S xmonad xmobar
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	if [ -d "$HOME/.xmonad" ]; then
+		mv $HOME/.xmonad/ $HOME/.xmonad_bak
+		ln -s $HOME/yggdrasil/xmonad $HOME/.config/.xmonad
+		return 3
+	fi
+
+	ln -s $HOME/yggdrasil/xmonad $HOME/.config/.xmonad
+	return 0
 }
 
 betterlockscreen() {

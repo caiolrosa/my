@@ -62,37 +62,13 @@ IFS=""
 declare -A RESULTS
 RESULTS=([errors]="" [skipped]="" [backup]="")
 
-handle_result() {
-	case $1 in
-		0) echo "$2 installed successfully" ;;
-		1) RESULTS[errors]+=" $2" ;;
-		2) RESULTS[skipped]+=" $2" ;;
-		3) RESULTS[backup]+=" $2" ;;
-	esac
-}
-
 for choice in ${choices[@]}; do
-	case $choice in
-		("alacritty")
-			status=$(bash arch/install.sh alacritty)
-			handle_result $status "Alacritty"
-			;;
-		("oh_my_zsh") bash arch/install.sh oh_my_zsh ;;
-		("tmux") bash arch/install.sh tmux ;;
-		("nerd_fonts") bash arch/install.sh nerd_fonts ;;
-		("direnv") bash arch/install.sh direnv ;;
-		("taskwarrior") bash arch/install.sh taskwarrior ;;
-		("nvim")
-			status=$(bash arch/install.sh nvim)
-			handle_result $status "Neovim"
-			;;
-		("asdf") bash arch/install.sh asdf ;;
-		("qtile") bash arch/install.sh qtile ;;
-		("xmonad") bash arch/install.sh xmonad ;;
-		("betterlockscreen") bash arch/install.sh betterlockscreen ;;
-		("brave") bash arch/install.sh brave ;;
-		("google_chrome") bash arch/install.sh google_chrome ;;
-		("docker") bash arch/install.sh docker ;;
+	status=$(bash arch/install.sh $choice)
+	case $status in
+		0) echo "$choice installed successfully" ;;
+		1) RESULTS[errors]+=" $choice" ;;
+		2) RESULTS[skipped]+=" $choice" ;;
+		3) RESULTS[backup]+=" $choice" ;;
 	esac
 done
 
