@@ -1,5 +1,5 @@
 alacritty() {
-	if command -v alacritty &> /dev/null; then
+	if [ $(command -v alacritty &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -24,7 +24,7 @@ oh_my_zsh() {
 }
 
 tmux() {
-	if command -v tmux &> /dev/null; then
+	if [ $(command -v tmux &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -53,7 +53,7 @@ nerd_fonts() {
 }
 
 direnv() {
-	if command -v direnv &> /dev/null; then
+	if [ $(command -v direnv &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -67,7 +67,7 @@ direnv() {
 }
 
 taskwarrior() {
-	if command -v task &> /dev/null; then
+	if [ $(command -v task &> /dev/null) ]; then
 		return 1
 	fi
 
@@ -89,7 +89,7 @@ taskwarrior() {
 }
 
 nvim() {
-	if command -v nvim &> /dev/null; then
+	if [ $(command -v nvim &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -114,7 +114,7 @@ asdf() {
 }
 
 qtile() {
-	if command -v qtile &> /dev/null; then
+	if [ $(command -v qtile &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -135,7 +135,7 @@ qtile() {
 }
 
 xmonad() {
-	if command -v xmonad &> /dev/null; then
+	if [ $(command -v xmonad &> /dev/null) ]; then
 		return 2
 	fi
 
@@ -171,4 +171,4 @@ docker() {
 	echo Docker
 }
 
-$1
+"$@"
