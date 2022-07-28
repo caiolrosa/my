@@ -1,13 +1,33 @@
 alacritty() {
+
 	if [ $(command -v alacritty &> /dev/null) ]; then
+
 		return 2
+
 	fi
 
-	yay --noconfirm -S alacritty
+
+	sudo add-apt-repository ppa:mmstick76/alacritty
+
 
 	if [ $? -ne 0 ]; then
+
 		return 1
+
 	fi
+
+
+	sudo apt update
+
+	sudo apt install alacritty
+
+
+	if [ $? -ne 0 ]; then
+
+		return 1
+
+	fi
+
 
 	if [ -d "$HOME/.config/alacritty" ]; then
 		mv $HOME/.config/alacritty $HOME/.config/alacritty_bak
@@ -16,8 +36,11 @@ alacritty() {
 	fi
 
 	ln -s $HOME/yggdrasil/alacritty $HOME/.config
+
 	return 0
 }
+
+
 
 oh_my_zsh() {
 	echo OhMyZsh
@@ -28,7 +51,7 @@ tmux() {
 		return 2
 	fi
 
-	yay --noconfirm -S tmux
+	sudo apt install tmux
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -45,8 +68,11 @@ tmux() {
 
 nerd_fonts() {
 	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip"
+
 	sudo mkdir -p /usr/share/fonts/TTF
+
 	sudo unzip SourceCodePro.zip -d /usr/share/fonts/TTF
+
 	rm SourceCodePro.zip
 
 	return 0
@@ -57,7 +83,7 @@ direnv() {
 		return 2
 	fi
 
-	yay --noconfirm -S direnv
+	sudo apt install direnv
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -66,12 +92,14 @@ direnv() {
 	return 0
 }
 
+
+
 taskwarrior() {
 	if [ $(command -v task &> /dev/null) ]; then
 		return 1
 	fi
 
-	yay --noconfirm -S task
+	sudo apt install taskwarrior
 
 	if [ $? -ne 0 ]; then
 		return 1
@@ -88,17 +116,19 @@ taskwarrior() {
 	return 0
 }
 
+
+
 nvim() {
 	if [ $(command -v nvim &> /dev/null) ]; then
 		return 2
 	fi
 
-	yay --noconfirm -S neovim
+	sudo apt install neovim
 
 	if [ $? -ne 0 ]; then
 		return 1
 	fi
-	
+
 	if [ -d "$HOME/.config/nvim" ]; then
 		mv $HOME/.config/nvim $HOME/.config/nvim_bak
 		ln -s $HOME/yggdrasil/nvim $HOME/.config
@@ -106,69 +136,100 @@ nvim() {
 	fi
 
 	ln -s  $HOME/yggdrasil/nvim $HOME/.config
+
 	return 0
 }
+
+
 
 asdf() {
-	echo Asdf
-}
-
-qtile() {
-	if [ $(command -v qtile &> /dev/null) ]; then
-		return 2
-	fi
-
-	yay --noconfirm -S qtile python-setuptools
+	sudo apt install curl git
 
 	if [ $? -ne 0 ]; then
 		return 1
 	fi
 
-	if [ -d "$HOME/.config/qtile" ]; then
-		mv $HOME/.config/qtile $HOME/.config/qtile_bak
-		ln -s $HOME/yggdrasil/qtile $HOME/.config
-		return 3
-	fi
-
-	ln -s $HOME/yggdrasil/qtile $HOME/.config
-	return 0
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
 }
 
-xmonad() {
-	if [ $(command -v xmonad &> /dev/null) ]; then
-		return 2
-	fi
 
-	yay --noconfirm -S xmonad xmobar
-
-	if [ $? -ne 0 ]; then
-		return 1
-	fi
-
-	if [ -d "$HOME/.xmonad" ]; then
-		mv $HOME/.xmonad/ $HOME/.xmonad_bak
-		ln -s $HOME/yggdrasil/xmonad $HOME/.config/.xmonad
-		return 3
-	fi
-
-	ln -s $HOME/yggdrasil/xmonad $HOME/.config/.xmonad
-	return 0
-}
 
 betterlockscreen() {
 	echo BetterLockScreen
 }
 
+
+
 brave() {
-	echo Brave
+	sudo apt install apt-transport-https curl
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+	sudo apt update
+
+	sudo apt install brave-browser
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	return 0
 }
+
+
 
 google_chrome() {
-	echo Google Chrome
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	rm google-chrome-stable_current_amd64.deb
+
+	return 0
 }
 
+
+
 docker() {
-	echo Docker
+	if [ $(command -v docker &> /dev/null) ]; then
+		return 2
+	fi
+
+	curl -fsSL https://get.docker.com -o get-docker.sh
+
+	sudo sh get-docker.sh
+
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	rm get-docker.sh
+
+	if ! [ $(getent group docker) ]; then
+		sudo groupadd docker
+	fi
+
+	sudo usermod -aG docker $USER
+
+	return 0
 }
 
 "$@"

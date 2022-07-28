@@ -2,15 +2,10 @@
 
 should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
 if [ $should_update == "true" ]; then
-	sudo pacman -Syu --noconfirm
+	sudo apt update
 fi
 
-sudo pacman --noconfirm -S yay
-if [ $? -ne 0 ]; then
-	echo "Failed installing yay"; exit 1
-fi
-
-yay --noconfirm -S base-devel
+sudo apt install build-essential
 if [ $? -ne 0 ]; then
 	echo "Failed installing baseline packages"; exit 1
 fi
@@ -38,12 +33,10 @@ dev_title="Which development tools do you want to install?"
 dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
 
 wms=(
-	qtile "Qtile"
-	xmonad "Xmonad"
 	betterlockscreen "BetterLockScreen"
 )
 
-wms_title="Which window managers do you want to install?"
+wms_title="Which window managers and lockscreens do you want to install?"
 wms_selection=($(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]}))
 
 softwares=(
@@ -63,7 +56,7 @@ declare -A RESULTS
 RESULTS=([errors]="" [skipped]="" [backup]="")
 
 for choice in ${choices[@]}; do
-	status=$(bash arch/install.sh $choice)
+	status=$(bash ubuntu/install.sh $choice)
 	case $status in
 		0) echo "$choice installed successfully" ;;
 		1) RESULTS[errors]+=" $choice" ;;
