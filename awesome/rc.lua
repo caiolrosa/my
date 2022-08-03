@@ -120,8 +120,9 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
 	    widgets.tux_icon,
             s.mytaglist,
+	    widgets.separator(beautiful.nord_dark_4, 10, 10),
         },
-        wibox.container.margin(s.mytasklist, dpi(10)), -- Middle widget
+        s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
 
