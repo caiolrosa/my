@@ -80,7 +80,7 @@ end
 widgets.wifi = function(color, interface, no_connection_unicode, connected_unicode, icon_margin_left, icon_margin_right)
     return awful.widget.watch(string.format("sh %s/.config/awesome/wifi_signal.sh %s", os.getenv("HOME"), interface), 30, function(widget, stdout)
         local signal = tonumber(stdout)
-	if signal == nil or signal > 0 then
+	if signal == nil0 then
             widget:set_markup("0%")
 	    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
 	else
