@@ -18,14 +18,14 @@ widgets.tag_list = function(s)
             spacing = 5,
             layout = wibox.layout.fixed.horizontal
         }
-    } 
+    }
 end
 
 widgets.task_list = function(s)
    return awful.widget.tasklist {
         screen = s,
         filter = awful.widget.tasklist.filter.currenttags,
-    } 
+    }
 end
 
 function fa_icon_markup(color, unicode)
@@ -49,7 +49,7 @@ widgets.keyboard_layout = function(color)
     return wibox.widget {
 	{ widget = awful.widget.keyboardlayout() },
 	widget = wibox.container.background(),
-	fg = color 
+	fg = color
     }
 end
 
@@ -59,7 +59,7 @@ widgets.cpu = function(color)
             widget:set_markup(
 	        string.format("<span foreground='%s'>%d%%</span>", color, cpu_now.usage)
 	    )
-        end 
+        end
     }
 end
 
@@ -153,7 +153,7 @@ widgets.date = function(color)
     return wibox.widget {
         { widget = wibox.widget.textclock("%a %b %d") },
         widget = wibox.container.background(),
-        fg = color 
+        fg = color
     }
 end
 
@@ -181,7 +181,7 @@ widgets.updates = function(no_updates_color, updates_color, updates_unicode)
 	end
     end)
 end
-    
+
 widgets.username = function(color, margin_left, margin_right)
     return wibox.container.margin(
         wibox.widget {
@@ -191,5 +191,5 @@ widgets.username = function(color, margin_left, margin_right)
         }, dpi(margin_left), dpi(margin_right)
     )
 end
-    
+
 return widgets
