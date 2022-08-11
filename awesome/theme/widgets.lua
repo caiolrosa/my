@@ -81,17 +81,17 @@ widgets.wifi = function(color, no_connection_unicode, connected_unicode, icon_ma
     return awful.widget.watch(string.format("sh %s/.config/awesome/wifi_signal.sh", os.getenv("HOME")), 30, function(widget, stdout)
 	if stdout == "" or stdout == nil then
             widget:set_markup("0%")
-	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
+	    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
 	    return
 	end
 
         local signal = tonumber(stdout)
 	if signal == 0 then
             widget:set_markup("0%")
-	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
+	    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
 	else
             widget:set_markup(string.format("%d%%", signal))
-	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, connected_unicode))
+	    wifi_icon_text:set_markup(fa_icon_markup(color, connected_unicode))
 	end
     end)
 end
