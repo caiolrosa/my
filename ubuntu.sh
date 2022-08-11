@@ -33,6 +33,7 @@ dev_title="Which development tools do you want to install?"
 dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
 
 wms=(
+	awesome "Awesome"
 	betterlockscreen "BetterLockScreen"
 )
 
