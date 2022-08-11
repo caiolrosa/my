@@ -1,2 +1,2 @@
 #!/bin/bash
-awk 'NR==3 {printf "%3.0f", ($3/70)*100}' /proc/net/wireless
+iwconfig $1 | grep -i quality | awk '{printf $2}' | awk -F '=' '{printf $2}' | awk -F '/' '{printf "$.0f", ($1/$2)*100}'

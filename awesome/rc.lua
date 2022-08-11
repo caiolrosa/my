@@ -115,7 +115,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    theme.widgets.separator(beautiful.nord_dark_4, 10, 10),
 
 	    theme.widgets.wifi_icon(0, 5),
-	    theme.widgets.wifi(beautiful.nord_teal, "\u{faa9}", "\u{faa8}", 10, 5),
+	    theme.widgets.wifi(beautiful.nord_teal, "wlo1", "\u{faa9}", "\u{faa8}", 10, 5),
 
 	    theme.widgets.separator(beautiful.nord_dark_4, 10, 10),
 

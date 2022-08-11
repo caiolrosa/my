@@ -77,16 +77,10 @@ local wifi_icon_text = wibox.widget.textbox()
 widgets.wifi_icon = function(margin_left, margin_right)
     return wibox.container.margin(wifi_icon_text, dpi(margin_left), dpi(margin_right))
 end
-widgets.wifi = function(color, no_connection_unicode, connected_unicode, icon_margin_left, icon_margin_right)
-    return awful.widget.watch(string.format("sh %s/.config/awesome/wifi_signal.sh", os.getenv("HOME")), 30, function(widget, stdout)
-	if stdout == "" or stdout == nil then
-            widget:set_markup("0%")
-	    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
-	    return
-	end
-
+widgets.wifi = function(color, interface, no_connection_unicode, connected_unicode, icon_margin_left, icon_margin_right)
+    return awful.widget.watch(string.format("sh %s/.config/awesome/wifi_signal.sh %s", os.getenv("HOME"), interface), 30, function(widget, stdout)
         local signal = tonumber(stdout)
-	if signal == 0 then
+	if signal == nil or signal > 0 then
             widget:set_markup("0%")
 	    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
 	else
