@@ -69,10 +69,12 @@ keybinds.globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey }, "space",
-    	      function () awful.spawn.with_shell(
-	      	string.format("rofi -show-icons -show drun")
-	      ) end,
+    	      function () awful.spawn.with_shell("rofi -show-icons -show drun") end,
 	      {description = "run prompt", group = "launcher"}),
+
+    awful.key({ modkey, "Shift" }, "space",
+              function() awful.spawn.with_shell("rofi -show run")end,
+	      { description = "run command" }),
 
     -- Toggle keyboard layout
     awful.key({ modkey, "Control" }, "space",
