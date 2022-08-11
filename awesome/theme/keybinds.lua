@@ -70,7 +70,7 @@ keybinds.globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey }, "space",
     	      function () awful.spawn.with_shell(
-	      	string.format("rofi -show drun")
+	      	string.format("rofi -show-icons -show drun")
 	      ) end,
 	      {description = "run prompt", group = "launcher"}),
 
