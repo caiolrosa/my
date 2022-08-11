@@ -77,31 +77,23 @@ local wifi_icon_text = wibox.widget.textbox()
 widgets.wifi_icon = function(margin_left, margin_right)
     return wibox.container.margin(wifi_icon_text, dpi(margin_left), dpi(margin_right))
 end
-widgets.wifi = function(color, interface, no_connection_unicode, connected_unicode, icon_margin_left, icon_margin_right)
-    return lain.widget.net {
-        notify = "off",
-        wifi_state = "on",
-        settings = function()
-            local interface = net_now.devices[interface]
+widgets.wifi = function(color, no_connection_unicode, connected_unicode, icon_margin_left, icon_margin_right)
+    return awful.widget.watch(string.format("sh %s/.config/awesome/wifi_signal.sh", os.getenv("HOME")), 30, function(widget, stdout)
+	if stdout == "" or stdout == nil then
+            widget:set_markup("0%")
+	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
+	    return
+	end
 
-            if interface then
-		if interface.ethernet then
-		    wifi_icon_text:set_markup(fa_icon_markup(color, connected_unicode))
-		    widget:set_markup(lain.util.markup:fontfg(beautiful.font, color, "100%"))
-		end
-                if interface.wifi then
-                    local signal = interface.signal
-	            wifi_icon_text:set_markup(fa_icon_markup(color, connected_unicode))
-		    widget:set_markup(lain.util.markup:fontfg(beautiful.font, color, string.format("%d%%", signal)))
-                else
-		    wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
-                end
-	    else
-	        wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
-	        widget:set_markup(lain.util.markup.fontfg(beautiful.font, color, "0%"))
-            end
-        end
-    }
+        local signal = tonumber(stdout)
+	if signal == 0 then
+            widget:set_markup("0%")
+	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, no_connection_unicode))
+	else
+            widget:set_markup(string.format("%d%%", signal))
+	    widgets.wifi_icon_text:set_markup(fa_icon_markup(color, connected_unicode))
+	end
+    end)
 end
 
 local battery_icon_text = wibox.widget.textbox()
