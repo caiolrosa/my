@@ -1,33 +1,20 @@
 alacritty() {
-
 	if [ $(command -v alacritty &> /dev/null) ]; then
-
 		return 2
-
 	fi
-
 
 	sudo add-apt-repository ppa:mmstick76/alacritty
 
-
 	if [ $? -ne 0 ]; then
-
 		return 1
-
 	fi
-
 
 	sudo apt update
-
 	sudo apt install alacritty
 
-
 	if [ $? -ne 0 ]; then
-
 		return 1
-
 	fi
-
 
 	if [ -d "$HOME/.config/alacritty" ]; then
 		mv $HOME/.config/alacritty $HOME/.config/alacritty_bak
@@ -39,8 +26,6 @@ alacritty() {
 
 	return 0
 }
-
-
 
 oh_my_zsh() {
 	echo OhMyZsh
@@ -74,6 +59,31 @@ nerd_fonts() {
 	sudo unzip SourceCodePro.zip -d /usr/share/fonts/TTF
 
 	rm SourceCodePro.zip
+
+	return 0
+}
+
+awesome() {
+	sudo apt install awesome picom rofi
+
+	if [ -d "$HOME/.config/awesome" ]; then
+		mv $HOME/.config/awesome $HOME/.config/awesome_bak
+	fi
+
+	ln -s $HOME/yggdrasil/awesome $HOME/.config
+
+
+	if [ -d "$HOME/.config/picom" ]; then
+		mv $HOME/.config/picom $HOME/.config/picom_bak
+	fi
+
+	ln -s $HOME/yggdrasil/picom $HOME/.config
+
+	if [ -d "$HOME/.config/rofi" ]; then
+		mv $HOME/.config/rofi $HOME/.config/rofi_bak
+	fi
+
+	ln -s $HOME/yggdrasil/rofi $HOME/.config
 
 	return 0
 }
