@@ -102,8 +102,6 @@ direnv() {
 	return 0
 }
 
-
-
 taskwarrior() {
 	if [ $(command -v task &> /dev/null) ]; then
 		return 1
@@ -125,8 +123,6 @@ taskwarrior() {
 
 	return 0
 }
-
-
 
 nvim() {
 	if [ $(command -v nvim &> /dev/null) ]; then
@@ -150,8 +146,6 @@ nvim() {
 	return 0
 }
 
-
-
 asdf() {
 	sudo apt install curl git
 
@@ -162,13 +156,9 @@ asdf() {
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
 }
 
-
-
 betterlockscreen() {
 	echo BetterLockScreen
 }
-
-
 
 brave() {
 	sudo apt install apt-transport-https curl
@@ -196,8 +186,6 @@ brave() {
 	return 0
 }
 
-
-
 google_chrome() {
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
@@ -215,8 +203,6 @@ google_chrome() {
 
 	return 0
 }
-
-
 
 docker() {
 	if [ $(command -v docker &> /dev/null) ]; then

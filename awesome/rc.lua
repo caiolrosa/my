@@ -86,7 +86,7 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag({ "web", "terminal", "chat", "music", "misc" }, s, awful.layout.layouts[1])
     s.mytaglist = theme.widgets.tag_list(s)
     s.mytasklist = theme.widgets.task_list(s)
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(23) })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(25) })
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -115,7 +115,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    theme.widgets.separator(beautiful.nord_dark_4, 10, 10),
 
 	    theme.widgets.wifi_icon(0, 5),
-	    theme.widgets.wifi(beautiful.nord_teal, "enp0s3", "\u{faa9}", "\u{faa8}", 10, 5).widget,
+	    theme.widgets.wifi(beautiful.nord_teal, "\u{faa9}", "\u{faa8}", 10, 5),
 
 	    theme.widgets.separator(beautiful.nord_dark_4, 10, 10),
 
