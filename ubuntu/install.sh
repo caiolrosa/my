@@ -28,7 +28,24 @@ alacritty() {
 }
 
 oh_my_zsh() {
-	echo OhMyZsh
+	if [ $(command -v zsh &> /dev/null) ]; then
+		return 2
+	fi
+
+	sudo apt install zsh
+
+	sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+
+	if [ -f "$HOME/.zshrc" ]; then
+		mv $HOME/.zshrc $HOME/.zshrc_bak
+		ln -s $HOME/yggdrasil/oh_my_zsh/.zshrc $HOME
+		return 3
+	fi
+
+	ln -s $HOME/yggdrasil/oh_my_zsh/.zshrc $HOME
+
+	return 0
 }
 
 tmux() {
