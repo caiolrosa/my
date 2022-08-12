@@ -34,7 +34,7 @@ dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
 
 wms=(
 	awesome "Awesome"
-	betterlockscreen "BetterLockScreen"
+	wm_betterlockscreen "BetterLockScreen"
 )
 
 wms_title="Which window managers and lockscreens do you want to install?"
