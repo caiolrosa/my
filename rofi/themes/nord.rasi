@@ -16,6 +16,8 @@
     nord14: #a3be8c;
     nord15: #b48ead;
 
+    font: "Ubuntu";
+
     spacing: 2;
     background-color: @nord1;
 
