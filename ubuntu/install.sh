@@ -173,28 +173,26 @@ asdf() {
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
 }
 
-betterlockscreen() {
+wm_betterlockscreen() {
 	if [ $(command -v betterlockscreen &> /dev/null) ]; then
 		return 2
 	fi
 
-	wget https://github.com/Raymo111/i3lock-color/releases/download/2.13.c.4/i3lock
-	sudo chmod +x i3lock
-	sudo mv i3lock /usr/local/bin
+	git clone https://github.com/Raymo111/i3lock-color.git
+	./i3lock-color/install-i3lock-color.sh
+	rm -rf i3lock-color
 
 	sudo apt install imagemagick
 
-	wget https://github.com/pavanjadhaw/betterlockscreen/archive/refs/heads/main.zip
-	unzip main.zip
+	git clone https://github.com/betterlockscreen/betterlockscreen.git bls
 
-	cd betterlockscreen-main/
-	chmod u+x betterlockscreen-main/betterlockscreen
-	sudo cp betterlockscreen-main/betterlockscreen /usr/local/bin/
+	chmod u+x bls/betterlockscreen
+	sudo cp bls/betterlockscreen /usr/local/bin/
 
-	sudo cp betterlockscreen-main/system/betterlockscreen@.service /usr/lib/systemd/system/
+	sudo cp bls/system/betterlockscreen@.service /usr/lib/systemd/system/
 	sudo systemctl enable betterlockscreen@$USER
 
-	rm -rf main.zip betterlockscreen-main
+	rm -rf bls
 
 	betterlockscreen -u $HOME/yggdrasil/awesome/wallpaper.jpg
 }
