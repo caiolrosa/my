@@ -63,9 +63,12 @@ keybinds.globalkeys = awful.util.table.join(
               describe("Toggle keyboard layout", "layout")),
 
     -- Volume controls
-    awful.key(mod,         "v", function() awful.spawn("amixer -q set Master 5%+") end, describe("Increase volume", "Volume")),
-    awful.key(mod_shift,   "v", function() awful.spawn("amixer -q set Master 5%-") end, describe("Decrease volume", "Volume")),
-    awful.key(mod_shift,   "m", function() awful.spawn("amixer -q set Master toggle") end, describe("Toggle volume", "Volume"))
+    awful.key(mod,         "v", function() awful.spawn("amixer -q set Master 5%+") end, describe("Increase volume", "volume")),
+    awful.key(mod_shift,   "v", function() awful.spawn("amixer -q set Master 5%-") end, describe("Decrease volume", "volume")),
+    awful.key(mod_shift,   "m", function() awful.spawn("amixer -q set Master toggle") end, describe("Toggle volume", "volume")),
+
+    -- Lock screen
+    awful.key(mod,         "Escape", function() awful.spawn("betterlockscreen -l dim") end, describe("Lock screen", "screen"))
 )
 
 -- Bind all key numbers to tags.

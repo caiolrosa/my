@@ -157,7 +157,12 @@ asdf() {
 }
 
 betterlockscreen() {
-	echo BetterLockScreen
+	if [ $(command -v nvim &> /dev/null) ]; then
+		return 2
+	fi
+
+	wget https://git.io/JZyxV -O - -q | bash -- system
+	betterlockscreen -u $HOME/yggdrasil/awesome/wallpaper.jpg
 }
 
 brave() {
