@@ -59,7 +59,7 @@ keybinds.globalkeys = awful.util.table.join(
 
     -- Toggle keyboard layout
     awful.key(mod_control, "space",
-              function() awful.spawn(string.format("%s/.config/awesome/toggle_keyboard_layout.sh", os.getenv("HOME"))) end,
+              function() awful.spawn(string.format("sh %s/.config/awesome/toggle_keyboard_layout.sh", os.getenv("HOME"))) end,
               describe("Toggle keyboard layout", "layout")),
 
     -- Volume controls
