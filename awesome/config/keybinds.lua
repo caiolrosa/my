@@ -66,12 +66,6 @@ keybinds.globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
-    awful.key({ modkey,           }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end),
-
     -- Prompt
     awful.key({ modkey }, "space",
     	      function () awful.spawn.with_shell("rofi -show-icons -show drun") end,
@@ -164,7 +158,14 @@ keybinds.clientkeys = awful.util.table.join(
               { description = "close", group = "client" }),
 
     awful.key({ modkey, "Shift" }, "f",  awful.client.floating.toggle,
-              { description = "toggle floating", group = "client" })
+              { description = "toggle floating", group = "client" }),
+
+    awful.key({ modkey,         }, "m",
+        function (c)
+            c.maximized = not c.maximized
+            c:raise()
+        end,
+        {description = "(un)maximize", group = "client"})
 )
 
 keybinds.clientbuttons = awful.util.table.join(
