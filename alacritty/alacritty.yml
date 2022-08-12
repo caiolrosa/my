@@ -1,5 +1,4 @@
 live_config_reload: true
-background_opacity: 0.95
 
 env:
   TERM: xterm-256color
@@ -9,10 +8,11 @@ shell:
   args:
     - -l
     - -c
-    - "$HOME/.config/tmux/starttmux.sh"
+    - "tmux"
 
 window:
   dynamic_title: true
+  opacity: 1
 
 scrolling:
   history: 10000
