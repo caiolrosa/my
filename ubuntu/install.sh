@@ -157,7 +157,7 @@ asdf() {
 }
 
 betterlockscreen() {
-	if [ $(command -v nvim &> /dev/null) ]; then
+	if [ $(command -v betterlockscreen &> /dev/null) ]; then
 		return 2
 	fi
 
