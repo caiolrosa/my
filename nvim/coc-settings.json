@@ -8,5 +8,17 @@
   "diagnostic.displayByAle": true,
   "coc.preferences.formatOnSaveFiletypes": ["typescriptreact", "typescript"],
   "eslint.autoFixOnSave": true,
-  "rust-analyzer.checkOnSave.command": "clippy"
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "languageserver": {
+    "terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+  }
 }
