@@ -53,6 +53,13 @@ theme.hotkeys_font                  = "Ubuntu"
 theme.hotkeys_fg                    = theme.nord_dark_blue
 theme.hotkeys_modifiers_fg          = theme.nord_light_blue
 
+theme.notification_bg               = theme.bg_normal
+theme.notification_fg               = theme.fg_normal
+theme.notification_font             = "Ubuntu"
+theme.notification_max_width        = 350
+theme.notification_max_height       = 150
+theme.notification_icon_size        = 80
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
