@@ -182,7 +182,7 @@ wm_betterlockscreen() {
 	./i3lock-color/install-i3lock-color.sh
 	rm -rf i3lock-color
 
-	sudo apt install imagemagick
+	sudo apt install imagemagick xautolock
 
 	git clone https://github.com/betterlockscreen/betterlockscreen.git bls
 
