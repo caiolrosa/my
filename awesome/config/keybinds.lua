@@ -9,7 +9,6 @@ local modkey            = "Mod1"
 local mod               = { modkey }
 local mod_control       = { modkey, "Control" }
 local mod_shift         = { modkey, "Shift" }
-local mod_control_shift = { modkey, "Shift" }
 
 local describe = function(description, group)
   return { description = description, group = group }
@@ -84,16 +83,7 @@ for i = 1, 9 do
                         end
                   end,
                   describe("view tag #" .. i, "tag")),
-        -- Toggle tag display.
-        awful.key(mod_control, "#" .. i + 9,
-                  function ()
-                      local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end,
-                  describe("toggle tag #" .. i, "tag")),
+
         -- Move client to tag.
         awful.key(mod_shift, "#" .. i + 9,
                   function ()
@@ -104,18 +94,7 @@ for i = 1, 9 do
                           end
                      end
                   end,
-                  describe("move focused client to tag #" .. i, "tag")),
-        -- Toggle tag on focused client.
-        awful.key(mod_control_shift, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  describe("toggle focused client on tag #" .. i, "tag"))
+                  describe("move focused client to tag #" .. i, "tag"))
     )
 end
 
