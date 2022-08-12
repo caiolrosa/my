@@ -21,6 +21,14 @@ keybinds.globalkeys = awful.util.table.join(
         {description = "focus previous by index", group = "client"}
     ),
 
+    -- Standard program
+    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Control" }, "r", awesome.restart,
+              {description = "reload awesome", group = "awesome"}),
+    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+              {description = "quit awesome", group = "awesome"}),
+
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
@@ -41,15 +49,6 @@ keybinds.globalkeys = awful.util.table.join(
         end,
         {description = "go back", group = "client"}),
 
-    -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-              {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
-
-    -- Layout manipulation
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -66,6 +65,12 @@ keybinds.globalkeys = awful.util.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+
+    awful.key({ modkey,           }, "m",
+        function (c)
+            c.maximized_horizontal = not c.maximized_horizontal
+            c.maximized_vertical   = not c.maximized_vertical
+        end),
 
     -- Prompt
     awful.key({ modkey }, "space",
@@ -146,7 +151,7 @@ for i = 1, 9 do
 end
 
 keybinds.clientkeys = awful.util.table.join(
-    awful.key({ modkey, }, "f",
+    awful.key({ modkey, "Control" }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
             c:raise()
@@ -158,7 +163,7 @@ keybinds.clientkeys = awful.util.table.join(
               function (c) c:kill() end,
               { description = "close", group = "client" }),
 
-    awful.key({ modkey, "Control" }, "f",  awful.client.floating.toggle,
+    awful.key({ modkey, "Shift" }, "f",  awful.client.floating.toggle,
               { description = "toggle floating", group = "client" })
 )
 
