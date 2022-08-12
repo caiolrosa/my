@@ -56,6 +56,7 @@ keybinds.globalkeys = awful.util.table.join(
     -- Prompt
     awful.key(mod,         "space", function() awful.spawn.with_shell("rofi -show-icons -show drun") end, describe("run prompt", "launcher")),
     awful.key(mod_shift,   "space", function() awful.spawn.with_shell("rofi -show run") end, describe("run command", "launcher")),
+    awful.key(mod_control, "c", function() awful.spawn.with_shell("rofi -show calc -modi calc -no-show-match -no-sort") end, describe("run calculator", "launcher")),
 
     -- Toggle keyboard layout
     awful.key(mod_control, "space",
