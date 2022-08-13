@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v task &> /dev/null) ]; then
-	exit 2
-fi
-
 sudo apt install taskwarrior
 
 if [ -f "$HOME/.taskrc" ]; then
