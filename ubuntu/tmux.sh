@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v tmux &> /dev/null) ]; then
-	exit 2
-fi
-
 sudo apt install tmux
 
 if [ -L "$HOME/.config/tmux" ]; then

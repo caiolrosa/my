@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v zsh &> /dev/null) ]; then
-	exit 2
-fi
-
 sudo apt install zsh
 
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"

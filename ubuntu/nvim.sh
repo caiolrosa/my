@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v nvim &> /dev/null) ]; then
-	exit 2
-fi
-
 sudo apt install neovim
 
 if [ -L "$HOME/.config/nvim" ]; then

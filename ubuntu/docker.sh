@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v docker &> /dev/null) ]; then
-	exit 2
-fi
-
 curl -fsSL https://get.docker.com -o get-docker.sh
 
 sudo sh get-docker.sh

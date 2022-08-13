@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -x $(command -v alacritty &> /dev/null) ]; then
-	exit 2
-fi
-
 sudo add-apt-repository ppa:aslatter/alacritty
 
 sudo apt update
