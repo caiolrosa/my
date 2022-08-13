@@ -34,7 +34,7 @@ dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
 
 wms=(
 	awesome "Awesome"
-	wm_betterlockscreen "BetterLockScreen"
+	betterlockscreen "BetterLockScreen"
 )
 
 wms_title="Which window managers and lockscreens do you want to install?"
@@ -57,8 +57,9 @@ declare -A RESULTS
 RESULTS=([errors]="" [skipped]="" [backup]="")
 
 for choice in ${choices[@]}; do
-	status=$(bash ubuntu/install.sh $choice)
-	case $status in
+	echo "\n>>>>> Installing $choice <<<<<\n"
+	bash ubuntu/$choice.sh
+	case $? in
 		0) echo "$choice installed successfully" ;;
 		1) RESULTS[errors]+=" $choice" ;;
 		2) RESULTS[skipped]+=" $choice" ;;
