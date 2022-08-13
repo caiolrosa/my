@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
 if [ $should_update == "true" ]; then
@@ -14,7 +14,7 @@ IFS=","
 
 terminal=(
 	alacritty "Alacritty"
-	oh_my_zsh "Oh My Zsh"
+	zsh "Zsh"
 	tmux "Tmux"
 	nerd_fonts "Nerd Fonts"
 )

@@ -1,4 +1,6 @@
-if [ $(command -v docker &> /dev/null) ]; then
+#!/bin/bash
+
+if [ -x $(command -v docker &> /dev/null) ]; then
 	exit 2
 fi
 
