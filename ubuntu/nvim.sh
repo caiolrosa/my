@@ -1,10 +1,12 @@
-if [ $(command -v nvim &> /dev/null) ]; then
+#!/bin/bash
+
+if [ -x $(command -v nvim &> /dev/null) ]; then
 	exit 2
 fi
 
 sudo apt install neovim
 
-if [ -d "$HOME/.config/nvim" ]; then
+if [ -L "$HOME/.config/nvim" ]; then
 	mv $HOME/.config/nvim $HOME/.config/nvim_bak
 	ln -s $HOME/yggdrasil/nvim $HOME/.config
 	exit 3

@@ -1,4 +1,6 @@
-if [ $(command -v zsh &> /dev/null) ]; then
+#!/bin/bash
+
+if [ -x $(command -v zsh &> /dev/null) ]; then
 	exit 2
 fi
 

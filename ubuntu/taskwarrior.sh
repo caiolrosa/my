@@ -1,12 +1,10 @@
-if [ $(command -v task &> /dev/null) ]; then
+#!/bin/bash
+
+if [ -x $(command -v task &> /dev/null) ]; then
 	exit 2
 fi
 
 sudo apt install taskwarrior
-
-if [ $? -ne 0 ]; then
-	exit 1
-fi
 
 if [ -f "$HOME/.taskrc" ]; then
 	mv $HOME/.taskrc $HOME/.taskrc.bak
