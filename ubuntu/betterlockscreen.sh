@@ -9,7 +9,6 @@ sudo apt install imagemagick
 wget https://github.com/pavanjadhaw/betterlockscreen/archive/refs/heads/main.zip
 unzip main.zip
 
-cd betterlockscreen-main/
 chmod u+x betterlockscreen-main/betterlockscreen
 sudo cp betterlockscreen-main/betterlockscreen /usr/local/bin/
 
