@@ -57,30 +57,12 @@ declare -A RESULTS
 RESULTS=([errors]="" [skipped]="" [backup]="")
 
 for choice in ${choices[@]}; do
-	echo ""
-	echo "############################"
-	echo "##                        ##"
-	echo "##   Installing $choice   ##"
-	echo "##                        ##"
-	echo "############################"
-	echo ""
+	echo -e "\n>>>>> Installing $choice <<<<<\n"
 	bash ubuntu/$choice.sh
 	case $? in
-		0) echo ""
-		   echo "########################################"
-		   echo "##                                    ##"
-		   echo "##   Installed $choice successfully   ##"
-		   echo "##                                    ##"
-		   echo "########################################"
-		   echo "";;
+		0) echo -e "\n>>>>> Installed $choice successfully <<<<<\n";;
 		1) RESULTS[errors]+=" $choice"
-	           echo ""
-	           echo "###################################"
-	           echo "##                               ##"
-	           echo "##   Failed installing $choice   ##"
-	           echo "##                               ##"
-	           echo "###################################"
-		   echo "";;
+	           echo -e "\n>>>>> Failed installing $choice <<<<<\n";;
 		2) RESULTS[skipped]+=" $choice" ;;
 		3) RESULTS[backup]+=" $choice" ;;
 	esac
