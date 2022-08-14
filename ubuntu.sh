@@ -17,10 +17,7 @@ apps=(
 
 	asdf "Asdf"
 
-	# Rust depends on asdf
-	rust "Rust"
-
-	# Alacritty depends on rust
+	# Alacritty depends on rust which depends on asdf
 	alacritty "Alacritty"
 )
 apps_selection=($(yggui/target/release/yggui checklist "${apps_title}" ${apps[@]}))
