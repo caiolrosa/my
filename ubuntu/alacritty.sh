@@ -1,14 +1,15 @@
 #!/bin/bash
 
-sudo add-apt-repository ppa:aslatter/alacritty
+git clone https://github.com/alacritty/alacritty.git
+cd alacritty
 
-sudo apt update
-sudo apt install alacritty
+sudo apt install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 
-if [ -L "$HOME/.config/alacritty" ]; then
-	mv $HOME/.config/alacritty $HOME/.config/alacritty_bak
-	ln -s $HOME/yggdrasil/alacritty $HOME/.config
-	exit 3
-fi
+cargo build --release
 
-ln -s $HOME/yggdrasil/alacritty $HOME/.config
+sudo cp target/release/alacritty /usr/local/bin # or anywhere else in $PATH
+sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+sudo desktop-file-install extra/linux/Alacritty.desktop
+sudo update-desktop-database
+
+cd .. && rm -r alacritty

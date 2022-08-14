@@ -2,7 +2,7 @@
 
 should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
 if [ $should_update == "true" ]; then
-	sudo apt update
+	sudo apt update && sudo apt upgrade
 fi
 
 sudo apt install build-essential
@@ -12,44 +12,29 @@ fi
 
 IFS=","
 
-terminal=(
-	alacritty "Alacritty"
-	zsh "Zsh"
+dev_title="Which applications should be installed?"
+apps=(
 	tmux "Tmux"
 	nerd_fonts "Nerd Fonts"
-)
-
-terminal_title="Which terminal tools do you want to install?"
-terminal_selection=($(yggui/target/release/yggui checklist "${terminal_title}" ${terminal[@]}))
-
-dev=(
 	direnv "Direnv"
-	taskwarrior "Taskwarrior"
 	nvim "Neovim"
-	asdf "Asdf"
-)
-
-dev_title="Which development tools do you want to install?"
-dev_selection=($(yggui/target/release/yggui checklist "${dev_title}" ${dev[@]}))
-
-wms=(
 	awesome "Awesome"
 	betterlockscreen "BetterLockScreen"
-)
-
-wms_title="Which window managers and lockscreens do you want to install?"
-wms_selection=($(yggui/target/release/yggui checklist "${wms_title}" ${wms[@]}))
-
-softwares=(
+	taskwarrior "Taskwarrior"
 	brave "Brave"
 	google_chrome "Google Chrome"
 	docker "Docker"
+
+
+	# Depends on rust installed which depends on asdf
+	asdf "Asdf"
+	rust "Rust"
+	alacritty "Alacritty"
+
+	# Leave as last
+	zsh "Zsh"
 )
-
-software_title="Which software do you want to install?"
-software_selection=($(yggui/target/release/yggui checklist "${software_title}" ${softwares[@]}))
-
-choices=(${terminal_selection[@]} ${dev_selection[@]} ${wms_selection[@]} ${software_selection[@]})
+choices=(${apps[@]})
 
 IFS=""
 
