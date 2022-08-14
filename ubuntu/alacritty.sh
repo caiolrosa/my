@@ -1,6 +1,6 @@
 #!/bin/bash
 
-zsh ./rust.sh
+zsh $HOME/yggdrasil/ubuntu/rust.sh
 
 git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
 cd /tmp/alacritty
