@@ -1,20 +1,20 @@
 #!/bin/bash
 
-wget https://github.com/Raymo111/i3lock-color/releases/download/2.13.c.4/i3lock
-sudo chmod +x i3lock
-sudo mv i3lock /usr/local/bin
+wget -O /tmp/i3lock https://github.com/Raymo111/i3lock-color/releases/download/2.13.c.4/i3lock
+sudo chmod +x /tmp/i3lock
+sudo mv /tmp/i3lock /usr/local/bin
 
 sudo apt install imagemagick
 
-wget https://github.com/pavanjadhaw/betterlockscreen/archive/refs/heads/main.zip
-unzip main.zip
+wget -O /tmp/main.zip https://github.com/pavanjadhaw/betterlockscreen/archive/refs/heads/main.zip
+unzip /tmp/main.zip
 
-chmod u+x betterlockscreen-main/betterlockscreen
-sudo cp betterlockscreen-main/betterlockscreen /usr/local/bin/
+chmod u+x /tmp/betterlockscreen-main/betterlockscreen
+sudo cp /tmp/betterlockscreen-main/betterlockscreen /usr/local/bin/
 
-sudo cp betterlockscreen-main/system/betterlockscreen@.service /usr/lib/systemd/system/
+sudo cp /tmp/betterlockscreen-main/system/betterlockscreen@.service /usr/lib/systemd/system/
 sudo systemctl enable betterlockscreen@$USER
 
-rm -rf main.zip betterlockscreen-main
+rm -rf /tmp/main.zip /tmp/betterlockscreen-main
 
 betterlockscreen -u $HOME/yggdrasil/awesome/wallpaper.jpg
