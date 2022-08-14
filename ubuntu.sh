@@ -1,15 +1,5 @@
 #!/bin/bash
 
-should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
-if [ $should_update == "true" ]; then
-	sudo apt update && sudo apt upgrade
-fi
-
-sudo apt install build-essential
-if [ $? -ne 0 ]; then
-	echo "Failed installing baseline packages"; exit 1
-fi
-
 IFS=","
 
 apps_title="Which applications should be installed?"
@@ -24,7 +14,14 @@ apps=(
 	brave "Brave"
 	google_chrome "Google Chrome"
 	docker "Docker"
+
 	asdf "Asdf"
+
+	# Rust depends on asdf
+	rust "Rust"
+
+	# Alacritty depends on rust
+	alacritty "Alacritty"
 )
 apps_selection=($(yggui/target/release/yggui checklist "${apps_title}" ${apps[@]}))
 

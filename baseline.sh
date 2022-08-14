@@ -1,5 +1,11 @@
 #!/bin/bash
 
+should_update=$(yggui/target/release/yggui confirm "Do you want to update the system before starting")
+if [ $should_update == "true" ]; then
+	sudo apt update && sudo apt upgrade
+	sudo apt install build-essential
+fi
+
 if ! hash zsh; then
 	echo -e "\n>>>>> Installing zsh <<<<<\n"
 	sudo apt install zsh
