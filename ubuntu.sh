@@ -24,11 +24,7 @@ apps=(
 	brave "Brave"
 	google_chrome "Google Chrome"
 	docker "Docker"
-
-	# Depends on rust installed which depends on asdf
 	asdf "Asdf"
-	rust "Rust"
-	alacritty "Alacritty"
 )
 apps_selection=($(yggui/target/release/yggui checklist "${apps_title}" ${apps[@]}))
 
