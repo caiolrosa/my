@@ -6,10 +6,7 @@ if ! hash zsh; then
 	sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 	echo -e "\n>>>>> Finished installing zsh <<<<<\n"
 else
-	if [ -f $HOME/.zshrc]; then
-		mv $HOME/.zshrc $HOME/.zshrc_bak
-	fi
-
+	mv $HOME/.zshrc $HOME/.zshrc_bak
 	ln -s $HOME/yggdrasil/oh_my_zsh/.zshrc $HOME
 
 	git clone https://github.com/agkozak/zsh-z ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-z
@@ -17,4 +14,4 @@ else
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 fi
 
-sudo chsh -s $(which zsh)
+sudo chsh -s $(which zsh) $USER
