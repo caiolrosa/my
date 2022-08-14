@@ -10,9 +10,15 @@ if [ $? -ne 0 ]; then
 	echo "Failed installing baseline packages"; exit 1
 fi
 
+if ! hash zsh; then
+	echo -e "\n>>>>> Installing zsh <<<<<\n"
+	bash ubuntu/zsh.sh
+	echo -e "\n>>>>> Finished installing zsh <<<<<\n"
+fi
+
 IFS=","
 
-dev_title="Which applications should be installed?"
+apps_title="Which applications should be installed?"
 apps=(
 	tmux "Tmux"
 	nerd_fonts "Nerd Fonts"
@@ -25,16 +31,14 @@ apps=(
 	google_chrome "Google Chrome"
 	docker "Docker"
 
-
 	# Depends on rust installed which depends on asdf
 	asdf "Asdf"
 	rust "Rust"
 	alacritty "Alacritty"
-
-	# Leave as last
-	zsh "Zsh"
 )
-choices=(${apps[@]})
+apps_selection=($(yggui/target/release/yggui checklist "${apps_title}" ${apps[@]}))
+
+choices=(${apps_selection[@]})
 
 IFS=""
 
