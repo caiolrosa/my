@@ -57,8 +57,8 @@ theme.notification_bg               = theme.bg_normal
 theme.notification_fg               = theme.fg_normal
 theme.notification_font             = "Ubuntu"
 theme.notification_max_width        = 350
-theme.notification_max_height       = 150
-theme.notification_icon_size        = 80
+theme.notification_max_height       = 70
+theme.notification_icon_size        = 60
 
 -- There are other variable sets
 -- overriding the default one when
