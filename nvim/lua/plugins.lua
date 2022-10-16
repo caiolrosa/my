@@ -4,7 +4,11 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   use 'shaunsingh/nord.nvim'
+  use 'kyazdani42/nvim-web-devicons'
+
   use { 'neoclide/coc.nvim', branch = 'release', run = function() vim.fn['coc#util#install']() end }
+  use 'dense-analysis/ale'
+
   use 'tpope/vim-endwise'
   use 'Raimondi/delimitMate'
   use 'alvan/vim-closetag'
