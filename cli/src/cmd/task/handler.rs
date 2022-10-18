@@ -1,13 +1,17 @@
-use crate::cmd::{task::TaskHandler, task::TaskCommand, CommandHandler};
+use crate::cmd::task::{TaskHandler, TaskCommand};
 
-impl CommandHandler for TaskHandler {
-    fn handle(&self) {
-        match &self.command {
-            TaskCommand::List => println!("Task list command"),
-            TaskCommand::Create => println!("Task create command"),
-            TaskCommand::Update => println!("Task update command"),
-            TaskCommand::Delete => println!("Task delete command"),
-            TaskCommand::Sync => println!("Task sync command"),
-        }
+use crate::notion::service::NotionService;
+
+impl TaskHandler {
+    pub async fn handle(&self, task_service: impl NotionService) {
+        let list = match &self.command {
+            TaskCommand::List => task_service.list_tasks().await.unwrap(),
+            TaskCommand::Create => task_service.list_tasks().await.unwrap(),
+            TaskCommand::Update => task_service.list_tasks().await.unwrap(),
+            TaskCommand::Delete => task_service.list_tasks().await.unwrap(),
+            TaskCommand::Sync => task_service.list_tasks().await.unwrap(),
+        };
+
+        println!("{:?}", list)
     }
 }
