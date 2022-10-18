@@ -1,5 +1,4 @@
 tmux/plugins
-
 nvim/plugin/packer_compiled.lua
-
 cli/target
+cli/.envrc
