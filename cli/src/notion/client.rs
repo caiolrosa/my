@@ -1,11 +1,11 @@
 use anyhow::{Context, Result};
 use async_trait::async_trait;
 
-use super::model::QueryTaskDatabase;
+use super::model::{NotionObject, Page, TaskProperties};
 
 #[async_trait]
 pub trait NotionClient {
-    async fn query_database(&self, database_id: &str) -> Result<QueryTaskDatabase>;
+    async fn query_database(&self, database_id: &str) -> Result<NotionObject<Page<TaskProperties>>>;
 }
 
 pub struct NotionClientImpl {
@@ -33,7 +33,7 @@ impl NotionClientImpl {
 
 #[async_trait]
 impl NotionClient for NotionClientImpl {
-    async fn query_database(&self, database_id: &str) -> Result<QueryTaskDatabase> {
+    async fn query_database(&self, database_id: &str) -> Result<NotionObject<Page<TaskProperties>>> {
         let client = reqwest::Client::new();
         let req = client.post(self.build_url(format!("/databases/{}/query", database_id).as_str()));
 
@@ -42,7 +42,7 @@ impl NotionClient for NotionClientImpl {
             .send()
             .await
             .with_context(|| "Failed to query notion database")?
-            .json::<QueryTaskDatabase>()
+            .json::<NotionObject<Page<TaskProperties>>>()
             .await
             .with_context(|| "Failed to parse notion query database response")
     }

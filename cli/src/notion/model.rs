@@ -5,63 +5,87 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Text {
-    pub plain_text: String
-}
-
-#[derive(Deserialize)]
-pub struct Title {
-    pub title: Vec<Text>
+    pub content: String
 }
 
 #[derive(Deserialize)]
 pub struct RichText {
-    pub rich_text: Vec<Text>
+    pub text: Text
 }
 
 #[derive(Deserialize)]
-pub struct Selection {
-    pub name: String
+pub struct RichTextProperty {
+    pub rich_text: Vec<RichText>
 }
 
 #[derive(Deserialize)]
 pub struct Select {
-    pub select: Selection
+    pub name: String
+}
+
+#[derive(Deserialize)]
+pub struct SelectProperty {
+    pub select: Select
+}
+
+#[derive(Deserialize)]
+pub struct Title {
+    pub text: Text
+}
+
+#[derive(Deserialize)]
+pub struct TitleProperty {
+    pub title: Vec<Title>
 }
 
 #[derive(Deserialize)]
 pub struct Status {
-    pub status: Selection
+    pub name: String
 }
 
 #[derive(Deserialize)]
-pub struct CreatedAt {
+pub struct StatusProperty {
+    pub status: Select
+}
+
+#[derive(Deserialize)]
+pub struct CreatedAtProperty {
     pub created_time: String
 }
 
 #[derive(Deserialize)]
-pub struct UpdatedAt {
+pub struct UpdatedAtProperty {
     pub last_edited_time: String
 }
 
 #[derive(Deserialize)]
-pub struct TaskDatabaseProperties {
-    pub id: RichText,
-    pub source_id: RichText,
-    pub source: Select,
-    pub text: Title,
-    pub status: Status,
-    pub created_at: CreatedAt,
-    pub updated_at: UpdatedAt,
+pub struct TaskProperties {
+    pub id: RichTextProperty,
+    pub source_id: RichTextProperty,
+    pub source: SelectProperty,
+    pub text: TitleProperty,
+    pub status: StatusProperty,
+    pub created_at: CreatedAtProperty,
+    pub updated_at: UpdatedAtProperty
 }
 
 #[derive(Deserialize)]
-pub struct TaskDatabaseResults {
-    pub properties: TaskDatabaseProperties
+pub struct Parent {
+    #[serde(rename = "type")]
+    pub parent_type: String,
+
+    pub database_id: String
 }
 
 #[derive(Deserialize)]
-pub struct QueryTaskDatabase {
-    pub results: Vec<TaskDatabaseResults>
+pub struct Page<T> {
+    pub parent: Parent,
+    pub properties: T
+}
+
+#[derive(Deserialize)]
+pub struct NotionObject<T> {
+    pub results: Vec<T>
 }
 
 #[derive(Debug, Deserialize)]
@@ -121,15 +145,15 @@ impl FromStr for TaskSource {
     }
 }
 
-impl TryFrom<TaskDatabaseProperties> for Task {
+impl TryFrom<TaskProperties> for Task {
     type Error = anyhow::Error;
 
-    fn try_from(props: TaskDatabaseProperties) -> Result<Self, Self::Error> {
+    fn try_from(props: TaskProperties) -> Result<Self, Self::Error> {
         Ok(Task {
-            id: props.id.rich_text.first().with_context(|| "Task missing id property")?.plain_text.to_string(),
-            source_id: props.source_id.rich_text.first().with_context(|| "Task missing source id property")?.plain_text.to_string(),
+            id: props.id.rich_text.first().with_context(|| "Task missing id property")?.text.content.to_string(),
+            source_id: props.source_id.rich_text.first().with_context(|| "Task missing source id property")?.text.content.to_string(),
             source: TaskSource::from_str(props.source.select.name.as_str())?,
-            text: props.text.title.first().with_context(|| "Task missing text property")?.plain_text.to_string(),
+            text: props.text.title.first().with_context(|| "Task missing text property")?.text.content.to_string(),
             status: TaskStatus::from_str(props.status.status.name.as_str())?,
             created_at: props.created_at.created_time,
             updated_at: props.updated_at.last_edited_time,
