@@ -1,12 +1,15 @@
+use crate::notion::model::ArchiveTaskPayload;
 use anyhow::{Context, Result};
 use async_trait::async_trait;
 
-use super::model::{NotionObject, Page, TaskProperties, CreateTaskProperties};
+use super::model::{NotionObject, Page, TaskProperties, CreateTaskProperties, UpdatePage, UpdateTaskProperties, CreatePage};
 
 #[async_trait]
 pub trait NotionClient {
     async fn query_database(&self, database_id: &str) -> Result<NotionObject<Page<TaskProperties>>>;
-    async fn create_task_page(&self, page: Page<CreateTaskProperties>) -> Result<Page<TaskProperties>>;
+    async fn create_task_page(&self, page: CreatePage<CreateTaskProperties>) -> Result<Page<TaskProperties>>;
+    async fn update_task_page(&self, page_id: String, page: UpdatePage<UpdateTaskProperties>) -> Result<Page<TaskProperties>>;
+    async fn archive_task_page(&self, page_id: String, payload: ArchiveTaskPayload) -> Result<Page<TaskProperties>>;
 }
 
 pub struct NotionClientImpl {
@@ -48,7 +51,7 @@ impl NotionClient for NotionClientImpl {
             .with_context(|| "Failed to parse notion query database response")
     }
 
-    async fn create_task_page(&self, page: Page<CreateTaskProperties>) -> Result<Page<TaskProperties>> {
+    async fn create_task_page(&self, page: CreatePage<CreateTaskProperties>) -> Result<Page<TaskProperties>> {
         let client = reqwest::Client::new();
         let req = client.post(self.build_url("/pages"));
 
@@ -57,9 +60,39 @@ impl NotionClient for NotionClientImpl {
             .json(&page)
             .send()
             .await
-            .with_context(|| format!("Failed to create page to database {}", page.parent.database_id))?
+            .with_context(|| format!("Failed to create page in database {}", page.parent.database_id))?
             .json::<Page<TaskProperties>>()
             .await
             .with_context(|| "Failed to parse notion created task page")
+    }
+
+    async fn update_task_page(&self, page_id: String, page: UpdatePage<UpdateTaskProperties>) -> Result<Page<TaskProperties>> {
+        let client = reqwest::Client::new();
+        let req = client.patch(self.build_url(format!("/pages/{}", page_id).as_str()));
+
+        self
+            .build_request(req)
+            .json(&page)
+            .send()
+            .await
+            .with_context(|| "Failed to update page in database")?
+            .json::<Page<TaskProperties>>()
+            .await
+            .with_context(|| "Failed to parse notion updated task page")
+    }
+
+    async fn archive_task_page(&self, page_id: String, payload: ArchiveTaskPayload) -> Result<Page<TaskProperties>> {
+        let client = reqwest::Client::new();
+        let req = client.patch(self.build_url(format!("/pages/{}", page_id).as_str()));
+
+        self
+            .build_request(req)
+            .json(&payload)
+            .send()
+            .await
+            .with_context(|| "Failed to update page in database")?
+            .json::<Page<TaskProperties>>()
+            .await
+            .with_context(|| "Failed to parse notion updated task page")
     }
 }
