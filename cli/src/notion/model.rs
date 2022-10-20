@@ -1,64 +1,66 @@
 use std::str::FromStr;
 
-use anyhow::{Context, Result, anyhow};
-use serde::Deserialize;
+use anyhow::{Context, Result};
+use serde::{Serialize, Deserialize};
+use strum_macros::{EnumString, Display};
+use uuid::Uuid;
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Text {
     pub content: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct RichText {
     pub text: Text
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct RichTextProperty {
     pub rich_text: Vec<RichText>
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Select {
     pub name: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct SelectProperty {
     pub select: Select
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Title {
     pub text: Text
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct TitleProperty {
     pub title: Vec<Title>
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Status {
     pub name: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct StatusProperty {
-    pub status: Select
+    pub status: Status
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct CreatedAtProperty {
     pub created_time: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct UpdatedAtProperty {
     pub last_edited_time: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct TaskProperties {
     pub id: RichTextProperty,
     pub source_id: RichTextProperty,
@@ -69,43 +71,49 @@ pub struct TaskProperties {
     pub updated_at: UpdatedAtProperty
 }
 
-#[derive(Deserialize)]
-pub struct Parent {
-    #[serde(rename = "type")]
-    pub parent_type: String,
+#[derive(Serialize, Deserialize)]
+pub struct CreateTaskProperties {
+    pub id: RichTextProperty,
+    pub source_id: RichTextProperty,
+    pub source: SelectProperty,
+    pub text: TitleProperty,
+    pub status: StatusProperty,
+}
 
+#[derive(Serialize, Deserialize)]
+pub struct Parent {
     pub database_id: String
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Page<T> {
     pub parent: Parent,
     pub properties: T
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct NotionObject<T> {
     pub results: Vec<T>
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, EnumString, Display)]
 pub enum TaskSource {
-    #[serde(rename = "cli")]
+    #[strum(serialize = "cli")]
     Cli,
 
-    #[serde(rename = "jira")]
+    #[strum(serialize = "jira")]
     Jira,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, EnumString, Display)]
 pub enum TaskStatus {
-    #[serde(rename = "not_started")]
+    #[strum(serialize = "not_started")]
     NotStarted,
 
-    #[serde(rename = "in_progress")]
+    #[strum(serialize = "in_progress")]
     InProgress,
 
-    #[serde(rename = "done")]
+    #[strum(serialize = "done")]
     Done,
 }
 
@@ -120,27 +128,37 @@ pub struct Task {
     pub updated_at: String,
 }
 
-impl FromStr for TaskStatus {
-    type Err = anyhow::Error; 
+pub struct CreateTask {
+    pub source_id: String,
+    pub source: TaskSource,
+    pub text: String,
+    pub status: TaskStatus,
+}
 
-    fn from_str(status: &str) -> Result<Self, Self::Err> {
-        match status {
-            "not_started" => Ok(TaskStatus::NotStarted),
-            "in_progress" => Ok(TaskStatus::NotStarted),
-            "done" => Ok(TaskStatus::NotStarted),
-            _ => Err(anyhow!("Task status not found"))
+impl CreateTask {
+    pub fn new(source_id: String, source: TaskSource, text: String, status: TaskStatus) -> CreateTask {
+        CreateTask { source_id, source, text, status }
+    }
+}
+
+impl CreateTaskProperties {
+    pub fn new(create_task: CreateTask) -> CreateTaskProperties {
+        let task_id = Uuid::new_v4();
+        CreateTaskProperties {
+            id: RichTextProperty { rich_text: vec![RichText { text: Text { content: task_id.to_string() } }] },
+            source_id: RichTextProperty { rich_text: vec![RichText { text: Text { content: create_task.source_id } }] },
+            source: SelectProperty { select: Select { name: create_task.source.to_string() } },
+            text: TitleProperty { title: vec![Title { text: Text { content: create_task.text } }] },
+            status: StatusProperty { status: Status { name: create_task.status.to_string() } },
         }
     }
 }
 
-impl FromStr for TaskSource {
-    type Err = anyhow::Error;
-
-    fn from_str(source: &str) -> Result<Self, Self::Err> {
-        match source {
-            "cli" => Ok(TaskSource::Cli),
-            "jira" => Ok(TaskSource::Jira),
-            _ => Err(anyhow!("Failed to parse task source")),
+impl<T> Page<T> {
+    pub fn new(database_id: String, properties: T) -> Page<T> {
+        Page {
+            properties,
+            parent: Parent { database_id }
         }
     }
 }
