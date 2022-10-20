@@ -1,12 +1,15 @@
-use crate::notion::model::Page;
-use super::{client::NotionClient, model::{Task, CreateTask, CreateTaskProperties}};
+use crate::notion::model::CreatePage;
+use super::{client::NotionClient, model::{Task, CreateTaskPayload, UpdateTaskPayload, UpdatePage, ArchiveTaskPayload}};
 use anyhow::Result;
 use async_trait::async_trait;
 
 #[async_trait]
 pub trait NotionService {
     async fn list_tasks(&self) -> Result<Vec<Task>>;
-    async fn create_task(&self, database_id: String, payload: CreateTask) -> Result<Task>;
+    async fn create_task(&self, database_id: String, payload: CreateTaskPayload) -> Result<Task>;
+    async fn update_task(&self, page_id: String, archived: bool, payload: UpdateTaskPayload) -> Result<Task>;
+    async fn archive_task(&self, page_id: String) -> Result<Task>;
+    async fn complete_task(&self, task: Task) -> Result<Task>;
 }
 
 pub struct NotionServiceImpl {
@@ -28,13 +31,32 @@ impl NotionService for NotionServiceImpl {
     async fn list_tasks(&self) -> Result<Vec<Task>> {
         let query_result = self.notion_client.query_database(&self.database_id).await?;
 
-        query_result.results.into_iter().map(|r| Task::try_from(r.properties)).collect()
+        query_result.results.into_iter().map(Task::try_from).collect()
     }
 
-    async fn create_task(&self, database_id: String, payload: CreateTask) -> Result<Task> {
-        let task_properties = CreateTaskProperties::new(payload);
-        let task_page = Page::new(database_id, task_properties);
+    async fn create_task(&self, database_id: String, payload: CreateTaskPayload) -> Result<Task> {
+        let task_properties = payload.into();
+        let task_page = CreatePage::new(database_id, task_properties);
 
-        self.notion_client.create_task_page(task_page).await?.properties.try_into()
+        self.notion_client.create_task_page(task_page).await?.try_into()
+    }
+
+    async fn update_task(&self, page_id: String, archived: bool, payload: UpdateTaskPayload) -> Result<Task> {
+        let task_properties = payload.into();
+        let task_page = UpdatePage::new(archived, task_properties);
+
+        self.notion_client.update_task_page(page_id, task_page).await?.try_into()
+    }
+
+    async fn archive_task(&self, page_id: String) -> Result<Task> {
+        let payload = ArchiveTaskPayload::new(true);
+
+        self.notion_client.archive_task_page(page_id, payload).await?.try_into()
+    }
+
+    async fn complete_task(&self, mut task: Task) -> Result<Task> {
+        task.complete();
+
+        self.update_task(task.notion_page_id().into(), false, task.into()).await
     }
 }
