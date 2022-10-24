@@ -1,5 +1,5 @@
-use crate::notion::model::CreatePage;
-use super::{client::NotionClient, model::{Task, CreateTaskPayload, UpdateTaskPayload, UpdatePage, ArchiveTaskPayload, DatabaseFilter, SelectFilter}};
+use super::CreatePage;
+use super::{client::NotionClient, Task, CreateTaskPayload, UpdateTaskPayload, UpdatePage, ArchiveTaskPayload, DatabaseFilter, SelectFilter};
 use anyhow::Result;
 use async_trait::async_trait;
 

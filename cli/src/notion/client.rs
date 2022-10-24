@@ -1,8 +1,8 @@
-use crate::notion::model::ArchiveTaskPayload;
+use super::ArchiveTaskPayload;
 use anyhow::{Context, Result};
 use async_trait::async_trait;
 
-use super::model::{NotionObject, Page, TaskProperties, CreateTaskProperties, UpdatePage, UpdateTaskProperties, CreatePage, DatabaseFilter, SelectFilter};
+use super::{NotionObject, Page, TaskProperties, CreateTaskProperties, UpdatePage, UpdateTaskProperties, CreatePage, DatabaseFilter, SelectFilter};
 
 #[async_trait]
 pub trait NotionClient {

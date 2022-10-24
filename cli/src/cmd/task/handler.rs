@@ -1,5 +1,5 @@
 use std::str::FromStr;
-use crate::notion::model::{SelectFilter, UpdateTaskPayload};
+use crate::notion::{SelectFilter, UpdateTaskPayload};
 use anyhow::Result;
 use dialoguer::{Input, Select};
 use dialoguer::theme::ColorfulTheme;
@@ -9,7 +9,7 @@ use anyhow::anyhow;
 
 use crate::cmd::task::{TaskHandler, TaskCommand};
 
-use crate::notion::model::{CreateTaskPayload, TaskSource, TaskStatus, DatabaseFilter};
+use crate::notion::{CreateTaskPayload, TaskSource, TaskStatus, DatabaseFilter};
 use crate::notion::service::NotionService;
 
 impl TaskHandler {
