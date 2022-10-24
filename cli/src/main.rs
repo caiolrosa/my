@@ -11,8 +11,13 @@ use notion::client::NotionClientImpl;
 
 #[derive(Subcommand)]
 enum RootCommand {
+    /// Interact with CLI generated tasks and view tasks from any source
     Task(TaskHandler),
+
+    /// Interact and syncronize calendar information
     Calendar(CalendarHandler),
+
+    /// Interact with github resources
     Github(GithubHandler),
 }
 
