@@ -8,7 +8,7 @@ enum TaskCommand {
     Create,
     Update,
     Delete,
-    Sync,
+    Complete,
 }
 
 #[derive(Parser)]

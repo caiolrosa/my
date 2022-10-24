@@ -38,7 +38,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let notion_client = NotionClientImpl::new(token);
             let notion_service = NotionServiceImpl::new(Box::new(notion_client), task_database_id.to_string());
 
-            handler.handle(notion_service).await;
+            handler.handle(notion_service).await?;
         }
         RootCommand::Calendar(handler) => handler.handle(),
         RootCommand::Github(handler) => handler.handle(),

@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use anyhow::{Context, Result};
 use serde::{Serialize, Deserialize};
-use strum_macros::{EnumString, Display};
+use strum_macros::{EnumString, Display, EnumVariantNames};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
@@ -116,7 +116,7 @@ pub struct NotionObject<T> {
     pub results: Vec<T>
 }
 
-#[derive(Debug, Deserialize, EnumString, Display)]
+#[derive(Debug, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
 pub enum TaskSource {
     #[strum(serialize = "cli")]
     Cli,
@@ -125,7 +125,7 @@ pub enum TaskSource {
     Jira,
 }
 
-#[derive(Debug, Deserialize, EnumString, Display)]
+#[derive(Debug, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
 pub enum TaskStatus {
     #[strum(serialize = "not_started")]
     NotStarted,
@@ -150,6 +150,7 @@ pub struct Task {
     pub updated_at: String,
 }
 
+#[derive(Serialize)]
 pub struct CreateTaskPayload {
     pub source_id: String,
     pub source: TaskSource,
@@ -157,10 +158,27 @@ pub struct CreateTaskPayload {
     pub status: TaskStatus,
 }
 
+#[derive(Serialize)]
 pub struct UpdateTaskPayload {
     pub source: TaskSource,
     pub text: String,
     pub status: TaskStatus,
+}
+
+#[derive(Serialize)]
+pub struct EqualsFilter {
+    pub equals: String
+}
+
+#[derive(Serialize)]
+pub struct SelectFilter {
+    pub property: String,
+    pub select: EqualsFilter,
+}
+
+#[derive(Serialize)]
+pub struct DatabaseFilter<T> {
+    pub filter: T
 }
 
 #[derive(Serialize)]
@@ -178,9 +196,27 @@ impl Task {
     }
 }
 
+impl CreateTaskPayload {
+    pub fn new(source_id: String, source: TaskSource, text: String, status: TaskStatus) -> CreateTaskPayload {
+        CreateTaskPayload { source_id, source, text, status }
+    }
+}
+
+impl UpdateTaskPayload {
+    pub fn new(source: TaskSource, text: String, status: TaskStatus) -> UpdateTaskPayload {
+        UpdateTaskPayload { source, text, status }
+    }
+}
+
 impl ArchiveTaskPayload {
     pub fn new(archived: bool) -> ArchiveTaskPayload {
         ArchiveTaskPayload { archived }
+    }
+}
+
+impl<T> DatabaseFilter<T> {
+    pub fn build_select_filter(property: String, value: String) -> DatabaseFilter<SelectFilter> {
+        DatabaseFilter { filter: SelectFilter { property, select: EqualsFilter { equals: value } } }
     }
 }
 
