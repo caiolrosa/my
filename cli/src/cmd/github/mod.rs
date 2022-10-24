@@ -4,6 +4,7 @@ use clap::{Parser, Subcommand};
 
 #[derive(Subcommand)]
 enum GithubCommand {
+    /// View a list of opened pull requests
     Prs,
 }
 
