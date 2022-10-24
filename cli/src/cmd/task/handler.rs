@@ -57,7 +57,7 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
     let selected_task_index = Select::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
-    let text: String = Input::with_theme(&theme).with_prompt("Task text").with_initial_text(&tasks[selected_task_index].text).interact()?;
+    let text: String = Input::with_theme(&theme).with_prompt("Task text").with_initial_text(&tasks[selected_task_index].text).interact_text()?;
     let selected_status_index = Select::with_theme(&theme).with_prompt("Select task status").items(TaskStatus::VARIANTS).interact()?;
 
     let update_payload = UpdateTaskPayload::new(
