@@ -9,6 +9,7 @@ pub trait NotionService {
     async fn create_task(&self, database_id: String, payload: CreateTaskPayload) -> Result<Task>;
     async fn update_task(&self, page_id: String, archived: bool, payload: UpdateTaskPayload) -> Result<Task>;
     async fn archive_task(&self, page_id: String) -> Result<Task>;
+    async fn start_task(&self, task: Task) -> Result<Task>;
     async fn complete_task(&self, task: Task) -> Result<Task>;
 }
 
@@ -52,6 +53,12 @@ impl NotionService for NotionServiceImpl {
         let payload = ArchiveTaskPayload::new(true);
 
         self.notion_client.archive_task_page(page_id, payload).await?.try_into()
+    }
+
+    async fn start_task(&self, mut task: Task) -> Result<Task> {
+        task.start();
+
+        self.update_task(task.notion_page_id().into(), false, task.into()).await
     }
 
     async fn complete_task(&self, mut task: Task) -> Result<Task> {

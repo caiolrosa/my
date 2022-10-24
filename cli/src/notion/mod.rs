@@ -190,6 +190,10 @@ pub struct ArchiveTaskPayload {
 }
 
 impl Task {
+    pub fn start(&mut self) {
+        self.status = TaskStatus::InProgress
+    }
+
     pub fn complete(&mut self) {
         self.status = TaskStatus::Done
     }
