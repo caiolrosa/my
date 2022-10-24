@@ -30,7 +30,7 @@ async fn list_task(task_service: &impl NotionService) -> Result<()> {
     let tasks = task_service.list_tasks(None).await?;
 
     for task in tasks  {
-        println!("{: <40} | {: <40} | {: <40} | {: <40}", task.source, task.status, task.text, task.created_at)
+        println!("{: <4} | {: <11} | {}", task.source, task.status, task.text)
     }
 
     Ok(())
