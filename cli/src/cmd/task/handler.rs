@@ -27,7 +27,11 @@ impl TaskHandler {
 }
 
 async fn list_task(task_service: &impl NotionService) -> Result<()> {
-    println!("{:?}", task_service.list_tasks(None).await.unwrap());
+    let tasks = task_service.list_tasks(None).await?;
+
+    for task in tasks  {
+        println!("{: <40} | {: <40} | {: <40} | {: <40}", task.source, task.status, task.text, task.created_at)
+    }
 
     Ok(())
 }
