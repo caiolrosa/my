@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use crate::notion::{SelectFilter, UpdateTaskPayload};
 use anyhow::Result;
-use dialoguer::{Input, Select};
+use dialoguer::{Input, FuzzySelect};
 use dialoguer::theme::ColorfulTheme;
 use strum::VariantNames;
 use uuid::Uuid;
@@ -19,6 +19,7 @@ impl TaskHandler {
             TaskCommand::Create => create_task(&task_service).await?,
             TaskCommand::Update => update_task(&task_service).await?,
             TaskCommand::Delete => delete_task(&task_service).await?,
+            TaskCommand::Start => start_task(&task_service).await?,
             TaskCommand::Complete => complete_task(&task_service).await?,
         };
 
@@ -56,9 +57,9 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
-    let selected_task_index = Select::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
+    let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
     let text: String = Input::with_theme(&theme).with_prompt("Task text").with_initial_text(&tasks[selected_task_index].text).interact_text()?;
-    let selected_status_index = Select::with_theme(&theme).with_prompt("Select task status").items(TaskStatus::VARIANTS).interact()?;
+    let selected_status_index = FuzzySelect::with_theme(&theme).with_prompt("Select task status").items(TaskStatus::VARIANTS).interact()?;
 
     let update_payload = UpdateTaskPayload::new(
         TaskSource::Cli,
@@ -79,11 +80,27 @@ async fn delete_task(task_service: &impl NotionService) -> Result<()> {
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
-    let selected_task_index = Select::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
+    let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
 
     let deleted_task = task_service.archive_task(tasks[selected_task_index].notion_page_id().into()).await?;
 
     println!("[deleted] {} | {}", deleted_task.status, deleted_task.text);
+
+    Ok(())
+}
+
+async fn start_task(task_service: &impl NotionService) -> Result<()> {
+    let theme = ColorfulTheme::default();
+    let filter = DatabaseFilter::<SelectFilter>::build_select_filter("source".into(), TaskSource::Cli.to_string());
+    let tasks = task_service.list_tasks(Some(filter)).await?;
+
+    let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
+    let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to start").items(&select_items).interact()?;
+
+    let selected_task = tasks.into_iter().nth(selected_task_index).ok_or_else(|| anyhow!("Invalid chosen task index"))?;
+    let completed_task = task_service.start_task(selected_task).await?;
+
+    println!("[started] {} | {}", completed_task.status, completed_task.text);
 
     Ok(())
 }
@@ -94,7 +111,7 @@ async fn complete_task(task_service: &impl NotionService) -> Result<()> {
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
-    let selected_task_index = Select::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
+    let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to complete").items(&select_items).interact()?;
 
     let selected_task = tasks.into_iter().nth(selected_task_index).ok_or_else(|| anyhow!("Invalid chosen task index"))?;
     let completed_task = task_service.complete_task(selected_task).await?;

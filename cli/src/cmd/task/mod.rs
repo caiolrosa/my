@@ -16,6 +16,9 @@ enum TaskCommand {
     /// Delete a CLI created task
     Delete,
 
+    /// Start a CLI created task
+    Start,
+
     /// Complete a CLI created task
     Complete,
 }
