@@ -5,6 +5,7 @@ use std::str::FromStr;
 
 use anyhow::{Context, Result};
 use serde::{Serialize, Deserialize};
+use serde_json::json;
 use strum_macros::{EnumString, Display, EnumVariantNames};
 use uuid::Uuid;
 
@@ -169,24 +170,35 @@ pub struct UpdateTaskPayload {
 }
 
 #[derive(Serialize)]
-pub struct EqualsFilter {
-    pub equals: String
-}
-
-#[derive(Serialize)]
-pub struct SelectFilter {
-    pub property: String,
-    pub select: EqualsFilter,
-}
-
-#[derive(Serialize)]
-pub struct DatabaseFilter<T> {
-    pub filter: T
-}
-
-#[derive(Serialize)]
 pub struct ArchiveTaskPayload {
     pub archived: bool
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct DatabaseFilter(serde_json::Value);
+
+#[derive(Debug, Serialize, Deserialize, EnumString, Display)]
+pub enum DatabaseFilterCondition {
+    #[strum(serialize = "equals")]
+    Equals,
+
+    #[strum(serialize = "does_not_equal")]
+    NotEquals,
+}
+
+impl DatabaseFilter {
+    pub fn build_select_filter(property: &str, operation: &str, value: &str) -> DatabaseFilter {
+        let filter = json!({
+            "filter": {
+                "property": property,
+                "select": {
+                    operation: value
+                }
+            }
+        });
+
+        DatabaseFilter(filter)
+    }
 }
 
 impl Task {
@@ -218,12 +230,6 @@ impl UpdateTaskPayload {
 impl ArchiveTaskPayload {
     pub fn new(archived: bool) -> ArchiveTaskPayload {
         ArchiveTaskPayload { archived }
-    }
-}
-
-impl<T> DatabaseFilter<T> {
-    pub fn build_select_filter(property: String, value: String) -> DatabaseFilter<SelectFilter> {
-        DatabaseFilter { filter: SelectFilter { property, select: EqualsFilter { equals: value } } }
     }
 }
 
