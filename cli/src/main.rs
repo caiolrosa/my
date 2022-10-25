@@ -1,5 +1,6 @@
 mod cmd;
 mod notion;
+mod config;
 
 use crate::notion::service::NotionServiceImpl;
 use std::env;
@@ -58,12 +59,12 @@ fn notion_token() -> Result<String> {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
     let token = notion_token()?;
+    let config = config::load_config()?;
 
     match &cli.command {
         RootCommand::Task(handler) => {
-            let task_database_id = "c0ce71a3-47f3-4f6d-8145-b6d1aaf190e4";
             let notion_client = NotionClientImpl::new(token);
-            let notion_service = NotionServiceImpl::new(Box::new(notion_client), task_database_id.to_string());
+            let notion_service = NotionServiceImpl::new(Box::new(notion_client), config.notion.task_database_id.to_string());
 
             handler.handle(notion_service).await?;
         }
