@@ -42,9 +42,7 @@ async fn create_task(task_service: &impl NotionService) -> Result<()> {
 
     let uuid = Uuid::new_v4();
     let create_payload = CreateTaskPayload::new(uuid.to_string(), TaskSource::Cli, text, TaskStatus::NotStarted);
-
-    let database_id = "c0ce71a3-47f3-4f6d-8145-b6d1aaf190e4".into();
-    let created_task = task_service.create_task(database_id, create_payload).await?;
+    let created_task = task_service.create_task(create_payload).await?;
 
     println!("[created] {} | {}", created_task.status, created_task.text);
 
