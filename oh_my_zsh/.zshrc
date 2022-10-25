@@ -49,3 +49,5 @@ source $HOME/.profile
 # Aliases
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
+
+eval "$(direnv hook zsh)"
