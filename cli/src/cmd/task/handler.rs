@@ -70,16 +70,10 @@ async fn create_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn update_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_filter(
-        vec![
-            DatabasePropertyFilter{
-                filter_type: "select".into(),
-                property: "source".into(),
-                operation: DatabaseFilterCondition::Equals.to_string(),
-                value: TaskSource::Cli.to_string(),
-            }
-        ]
-    );
+    let filter = DatabaseFilter::build_filter(vec![
+        DatabasePropertyFilter::new("select".into(), "source".into(), DatabaseFilterCondition::Equals.to_string(), TaskSource::Cli.to_string()),
+    ]);
+
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
@@ -102,16 +96,10 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn delete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_filter(
-        vec![
-            DatabasePropertyFilter{
-                filter_type: "select".into(),
-                property: "source".into(),
-                operation: DatabaseFilterCondition::Equals.to_string(),
-                value: TaskSource::Cli.to_string(),
-            }
-        ]
-    );
+    let filter = DatabaseFilter::build_filter(vec![
+        DatabasePropertyFilter::new("select".into(), "source".into(), DatabaseFilterCondition::Equals.to_string(), TaskSource::Cli.to_string()),
+    ]);
+
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
@@ -126,16 +114,12 @@ async fn delete_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn start_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_filter(
-        vec![
-            DatabasePropertyFilter{
-                filter_type: "select".into(),
-                property: "source".into(),
-                operation: DatabaseFilterCondition::Equals.to_string(),
-                value: TaskSource::Cli.to_string(),
-            }
-        ]
-    );
+    let filter = DatabaseFilter::build_filter(vec![
+        DatabasePropertyFilter::new("select".into(), "source".into(), DatabaseFilterCondition::Equals.to_string(), TaskSource::Cli.to_string()),
+        DatabasePropertyFilter::new("status".into(), "status".into(), DatabaseFilterCondition::NotEquals.to_string(), TaskStatus::InProgress.to_string()),
+        DatabasePropertyFilter::new("status".into(), "status".into(), DatabaseFilterCondition::NotEquals.to_string(), TaskStatus::Done.to_string())
+    ]);
+
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
@@ -151,16 +135,11 @@ async fn start_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn complete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_filter(
-        vec![
-            DatabasePropertyFilter{
-                filter_type: "select".into(),
-                property: "source".into(),
-                operation: DatabaseFilterCondition::Equals.to_string(),
-                value: TaskSource::Cli.to_string(),
-            }
-        ]
-    );
+    let filter = DatabaseFilter::build_filter(vec![
+        DatabasePropertyFilter::new("select".into(), "source".into(), DatabaseFilterCondition::Equals.to_string(), TaskSource::Cli.to_string()),
+        DatabasePropertyFilter::new("status".into(), "status".into(), DatabaseFilterCondition::NotEquals.to_string(), TaskStatus::Done.to_string())
+    ]);
+
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
