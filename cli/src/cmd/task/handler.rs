@@ -58,7 +58,7 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
-    let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
+    let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
     let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
     let text: String = Input::with_theme(&theme).with_prompt("Task text").with_initial_text(&tasks[selected_task_index].text).interact_text()?;
     let selected_status_index = FuzzySelect::with_theme(&theme).with_prompt("Select task status").items(TaskStatus::VARIANTS).interact()?;
@@ -85,7 +85,7 @@ async fn delete_task(task_service: &impl NotionService) -> Result<()> {
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
-    let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
+    let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
     let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to edit").items(&select_items).interact()?;
 
     let deleted_task = task_service.archive_task(tasks[selected_task_index].notion_page_id().into()).await?;
@@ -104,7 +104,7 @@ async fn start_task(task_service: &impl NotionService) -> Result<()> {
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
-    let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
+    let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
     let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to start").items(&select_items).interact()?;
 
     let selected_task = tasks.into_iter().nth(selected_task_index).ok_or_else(|| anyhow!("Invalid chosen task index"))?;
@@ -124,7 +124,7 @@ async fn complete_task(task_service: &impl NotionService) -> Result<()> {
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
-    let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
+    let select_items: Vec<String> = tasks.iter().map(|t| format!("{: <11} | {}", t.status, t.text)).collect();
     let selected_task_index = FuzzySelect::with_theme(&theme).with_prompt("Select task to complete").items(&select_items).interact()?;
 
     let selected_task = tasks.into_iter().nth(selected_task_index).ok_or_else(|| anyhow!("Invalid chosen task index"))?;
