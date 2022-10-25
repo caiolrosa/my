@@ -1,11 +1,11 @@
 use super::CreatePage;
-use super::{client::NotionClient, Task, CreateTaskPayload, UpdateTaskPayload, UpdatePage, ArchiveTaskPayload, DatabaseFilter, SelectFilter};
+use super::{client::NotionClient, Task, CreateTaskPayload, UpdateTaskPayload, UpdatePage, ArchiveTaskPayload, DatabaseFilter};
 use anyhow::Result;
 use async_trait::async_trait;
 
 #[async_trait]
 pub trait NotionService {
-    async fn list_tasks(&self, filter: Option<DatabaseFilter<SelectFilter>>) -> Result<Vec<Task>>;
+    async fn list_tasks(&self, filter: Option<DatabaseFilter>) -> Result<Vec<Task>>;
     async fn create_task(&self, payload: CreateTaskPayload) -> Result<Task>;
     async fn update_task(&self, page_id: String, archived: bool, payload: UpdateTaskPayload) -> Result<Task>;
     async fn archive_task(&self, page_id: String) -> Result<Task>;
@@ -29,7 +29,7 @@ impl NotionServiceImpl {
 
 #[async_trait]
 impl NotionService for NotionServiceImpl {
-    async fn list_tasks(&self, filter: Option<DatabaseFilter<SelectFilter>>) -> Result<Vec<Task>> {
+    async fn list_tasks(&self, filter: Option<DatabaseFilter>) -> Result<Vec<Task>> {
         let query_result = self.notion_client.query_database(&self.database_id, filter).await?;
 
         query_result.results.into_iter().map(Task::try_from).collect()

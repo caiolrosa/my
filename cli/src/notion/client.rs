@@ -2,11 +2,11 @@ use super::ArchiveTaskPayload;
 use anyhow::{Context, Result};
 use async_trait::async_trait;
 
-use super::{NotionObject, Page, TaskProperties, CreateTaskProperties, UpdatePage, UpdateTaskProperties, CreatePage, DatabaseFilter, SelectFilter};
+use super::{NotionObject, Page, TaskProperties, CreateTaskProperties, UpdatePage, UpdateTaskProperties, CreatePage, DatabaseFilter};
 
 #[async_trait]
 pub trait NotionClient {
-    async fn query_database(&self, database_id: &str, filter: Option<DatabaseFilter<SelectFilter>>) -> Result<NotionObject<Page<TaskProperties>>>;
+    async fn query_database(&self, database_id: &str, filter: Option<DatabaseFilter>) -> Result<NotionObject<Page<TaskProperties>>>;
     async fn create_task_page(&self, page: CreatePage<CreateTaskProperties>) -> Result<Page<TaskProperties>>;
     async fn update_task_page(&self, page_id: String, page: UpdatePage<UpdateTaskProperties>) -> Result<Page<TaskProperties>>;
     async fn archive_task_page(&self, page_id: String, payload: ArchiveTaskPayload) -> Result<Page<TaskProperties>>;
@@ -37,7 +37,7 @@ impl NotionClientImpl {
 
 #[async_trait]
 impl NotionClient for NotionClientImpl {
-    async fn query_database(&self, database_id: &str, filter: Option<DatabaseFilter<SelectFilter>>) -> Result<NotionObject<Page<TaskProperties>>> {
+    async fn query_database(&self, database_id: &str, filter: Option<DatabaseFilter>) -> Result<NotionObject<Page<TaskProperties>>> {
         let client = reqwest::Client::new();
 
         let mut req = client.post(self.build_url(format!("/databases/{}/query", database_id).as_str()));

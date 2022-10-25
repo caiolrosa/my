@@ -1,5 +1,5 @@
 use std::str::FromStr;
-use crate::notion::{SelectFilter, UpdateTaskPayload};
+use crate::notion::{UpdateTaskPayload, DatabaseFilterCondition};
 use anyhow::Result;
 use dialoguer::{Input, FuzzySelect};
 use dialoguer::theme::ColorfulTheme;
@@ -51,7 +51,11 @@ async fn create_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn update_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::<SelectFilter>::build_select_filter("source".into(), TaskSource::Cli.to_string());
+    let filter = DatabaseFilter::build_select_filter(
+        "source",
+        &DatabaseFilterCondition::Equals.to_string(),
+        &TaskSource::Cli.to_string(),
+    );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
@@ -74,7 +78,11 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn delete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::<SelectFilter>::build_select_filter("source".into(), TaskSource::Cli.to_string());
+    let filter = DatabaseFilter::build_select_filter(
+        "source",
+        &DatabaseFilterCondition::Equals.to_string(),
+        &TaskSource::Cli.to_string(),
+    );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
@@ -89,7 +97,11 @@ async fn delete_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn start_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::<SelectFilter>::build_select_filter("source".into(), TaskSource::Cli.to_string());
+    let filter = DatabaseFilter::build_select_filter(
+        "source",
+        &DatabaseFilterCondition::Equals.to_string(),
+        &TaskSource::Cli.to_string(),
+    );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
@@ -105,7 +117,11 @@ async fn start_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn complete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::<SelectFilter>::build_select_filter("source".into(), TaskSource::Cli.to_string());
+    let filter = DatabaseFilter::build_select_filter(
+        "source",
+        &DatabaseFilterCondition::Equals.to_string(),
+        &TaskSource::Cli.to_string(),
+    );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
     let select_items: Vec<String> = tasks.iter().map(|t| format!("{} | {}", t.status, t.text)).collect();
