@@ -5,8 +5,10 @@ use crate::notion::service::NotionServiceImpl;
 use std::env;
 
 use crate::cmd::task::TaskHandler;
+use anyhow::{Result, Context};
 use clap::{Parser, Subcommand};
 use cmd::{calendar::CalendarHandler, github::GithubHandler};
+use dialoguer::{theme::ColorfulTheme, Password};
 use notion::client::NotionClientImpl;
 
 #[derive(Subcommand)]
@@ -28,14 +30,34 @@ struct Cli {
     command: RootCommand
 }
 
-fn notion_token() -> Result<String, env::VarError> {
-    env::var("NOTION_API_TOKEN")
+fn secret_request(message: &str) -> Result<String> {
+    Password::with_theme(&ColorfulTheme::default()).with_prompt(message).interact().with_context(|| "Failed getting user information")
+}
+
+fn notion_token() -> Result<String> {
+    let service = "notion";
+    let username = "my_cli";
+    let entry = keyring::Entry::new(service, username);
+
+    match entry.get_password() {
+        Ok(p) => Ok(p),
+        Err(_) => {
+            if let Ok(t) = env::var("NOTION_API_TOKEN") {
+                return Ok(t)
+            }
+
+            let notion_token = secret_request("Notion API Token")?;
+            entry.set_password(&notion_token)?;
+
+            entry.get_password().with_context(|| "Failed to retrieve notion token")
+        },
+    }
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-    let token = notion_token().expect("Failed to load notion api token, please make sure to add it to your keyring");
+    let token = notion_token()?;
 
     match &cli.command {
         RootCommand::Task(handler) => {

@@ -17,3 +17,4 @@ strum = "0.24"
 strum_macros = "0.24"
 uuid = { version = "1.2.1", features = ["v4", "fast-rng"] }
 dialoguer = { version = "0.10.2", features = ["fuzzy-select"] }
+keyring = "1"
