@@ -120,7 +120,7 @@ pub struct NotionObject<T> {
     pub results: Vec<T>
 }
 
-#[derive(Debug, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
+#[derive(Debug, Clone, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
 pub enum TaskSource {
     #[strum(serialize = "cli")]
     Cli,
@@ -129,7 +129,7 @@ pub enum TaskSource {
     Jira,
 }
 
-#[derive(Debug, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
+#[derive(Debug, Clone, Serialize, Deserialize, EnumString, EnumVariantNames, Display)]
 pub enum TaskStatus {
     #[strum(serialize = "not_started")]
     NotStarted,
@@ -186,14 +186,31 @@ pub enum DatabaseFilterCondition {
     NotEquals,
 }
 
+pub struct DatabasePropertyFilter {
+    pub filter_type: String,
+    pub property: String,
+    pub operation: String,
+    pub value: String,
+}
+
+impl DatabasePropertyFilter {
+    pub fn new(filter_type: String, property: String, operation: String, value: String) -> DatabasePropertyFilter {
+        DatabasePropertyFilter { filter_type, property, operation, value }
+    }
+}
+
 impl DatabaseFilter {
-    pub fn build_select_filter(property: &str, operation: &str, value: &str) -> DatabaseFilter {
+    pub fn build_filter(filter: Vec<DatabasePropertyFilter>) -> DatabaseFilter {
+        let property_filters: Vec<serde_json::Value> = filter.into_iter().map(|f| json!({
+            "property": f.property,
+            f.filter_type: {
+                f.operation: f.value,
+            }
+        })).collect();
+
         let filter = json!({
             "filter": {
-                "property": property,
-                "select": {
-                    operation: value
-                }
+                "and": property_filters
             }
         });
 
