@@ -2,10 +2,18 @@ pub mod handler;
 
 use clap::{Parser, Subcommand};
 
+use crate::notion::{TaskStatus, TaskSource};
+
 #[derive(Subcommand)]
 enum TaskCommand {
     /// List tasks
-    List,
+    List {
+        #[arg(long)]
+        status: Option<TaskStatus>,
+
+        #[arg(long)]
+        source: Option<TaskSource>,
+    },
 
     /// Create a task (the source will always be CLI)
     Create,
@@ -26,6 +34,6 @@ enum TaskCommand {
 #[derive(Parser)]
 pub struct TaskHandler {
     #[command(subcommand)]
-    command: TaskCommand
+    command: TaskCommand,
 }
 

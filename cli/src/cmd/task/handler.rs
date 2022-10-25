@@ -1,5 +1,5 @@
 use std::str::FromStr;
-use crate::notion::{UpdateTaskPayload, DatabaseFilterCondition};
+use crate::notion::{UpdateTaskPayload, DatabaseFilterCondition, DatabasePropertyFilter};
 use anyhow::Result;
 use dialoguer::{Input, FuzzySelect};
 use dialoguer::theme::ColorfulTheme;
@@ -12,10 +12,15 @@ use crate::cmd::task::{TaskHandler, TaskCommand};
 use crate::notion::{CreateTaskPayload, TaskSource, TaskStatus, DatabaseFilter};
 use crate::notion::service::NotionService;
 
+struct FilterArgs {
+    status: Option<TaskStatus>,
+    source: Option<TaskSource>,
+}
+
 impl TaskHandler {
     pub async fn handle(&self, task_service: impl NotionService) -> Result<()> {
         match &self.command {
-            TaskCommand::List => list_task(&task_service).await?,
+            TaskCommand::List { status, source } => list_task(&task_service, FilterArgs{ status: status.to_owned(), source: source.to_owned() }).await?,
             TaskCommand::Create => create_task(&task_service).await?,
             TaskCommand::Update => update_task(&task_service).await?,
             TaskCommand::Delete => delete_task(&task_service).await?,
@@ -27,8 +32,22 @@ impl TaskHandler {
     }
 }
 
-async fn list_task(task_service: &impl NotionService) -> Result<()> {
-    let tasks = task_service.list_tasks(None).await?;
+async fn list_task(task_service: &impl NotionService, filter_args: FilterArgs) -> Result<()> {
+    let mut property_filters: Vec<DatabasePropertyFilter> = vec![];
+    if let Some(f) = filter_args.status {
+        property_filters.append(&mut vec![DatabasePropertyFilter::new("status".into(), "status".into(), DatabaseFilterCondition::Equals.to_string(), f.to_string())])
+    }
+
+    if let Some(f) = filter_args.source {
+        property_filters.append(&mut vec![DatabasePropertyFilter::new("select".into(), "source".into(), DatabaseFilterCondition::Equals.to_string(), f.to_string())])
+    }
+
+    let filters = match property_filters.is_empty() {
+        true => None,
+        false => Some(DatabaseFilter::build_filter(property_filters)),
+    };
+
+    let tasks = task_service.list_tasks(filters).await?;
 
     for task in tasks  {
         println!("{: <4} | {: <11} | {}", task.source, task.status, task.text)
@@ -51,10 +70,15 @@ async fn create_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn update_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_select_filter(
-        "source",
-        &DatabaseFilterCondition::Equals.to_string(),
-        &TaskSource::Cli.to_string(),
+    let filter = DatabaseFilter::build_filter(
+        vec![
+            DatabasePropertyFilter{
+                filter_type: "select".into(),
+                property: "source".into(),
+                operation: DatabaseFilterCondition::Equals.to_string(),
+                value: TaskSource::Cli.to_string(),
+            }
+        ]
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
@@ -78,10 +102,15 @@ async fn update_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn delete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_select_filter(
-        "source",
-        &DatabaseFilterCondition::Equals.to_string(),
-        &TaskSource::Cli.to_string(),
+    let filter = DatabaseFilter::build_filter(
+        vec![
+            DatabasePropertyFilter{
+                filter_type: "select".into(),
+                property: "source".into(),
+                operation: DatabaseFilterCondition::Equals.to_string(),
+                value: TaskSource::Cli.to_string(),
+            }
+        ]
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
@@ -97,10 +126,15 @@ async fn delete_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn start_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_select_filter(
-        "source",
-        &DatabaseFilterCondition::Equals.to_string(),
-        &TaskSource::Cli.to_string(),
+    let filter = DatabaseFilter::build_filter(
+        vec![
+            DatabasePropertyFilter{
+                filter_type: "select".into(),
+                property: "source".into(),
+                operation: DatabaseFilterCondition::Equals.to_string(),
+                value: TaskSource::Cli.to_string(),
+            }
+        ]
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
@@ -117,10 +151,15 @@ async fn start_task(task_service: &impl NotionService) -> Result<()> {
 
 async fn complete_task(task_service: &impl NotionService) -> Result<()> {
     let theme = ColorfulTheme::default();
-    let filter = DatabaseFilter::build_select_filter(
-        "source",
-        &DatabaseFilterCondition::Equals.to_string(),
-        &TaskSource::Cli.to_string(),
+    let filter = DatabaseFilter::build_filter(
+        vec![
+            DatabasePropertyFilter{
+                filter_type: "select".into(),
+                property: "source".into(),
+                operation: DatabaseFilterCondition::Equals.to_string(),
+                value: TaskSource::Cli.to_string(),
+            }
+        ]
     );
     let tasks = task_service.list_tasks(Some(filter)).await?;
 
