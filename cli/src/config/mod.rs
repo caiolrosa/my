@@ -3,6 +3,8 @@ pub mod service;
 use serde::{Serialize, Deserialize};
 use anyhow::Result;
 
+use crate::notion;
+
 #[derive(Serialize, Deserialize)]
 pub struct Notion {
     pub api_version: String,
@@ -15,14 +17,19 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(api_version: String, task_database_id: String) -> Config {
-        Config { notion: Notion { api_version, task_database_id } }
+    pub fn default() -> Config {
+        Config {
+            notion: Notion {
+                api_version: notion::default_api_version(),
+                task_database_id: "[add your task database id here]".to_string()
+            }
+        }
     }
 }
 
 pub trait ConfigService {
     fn load_config(&self) -> Result<Config>;
-    fn save_config(&self, config: Config) -> Result<Config>;
+    fn edit_config(&self, config: Option<&Config>) -> Result<Config>;
 }
 
 pub struct ConfigServiceImpl;
