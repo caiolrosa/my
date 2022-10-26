@@ -9,6 +9,8 @@ use serde_json::json;
 use strum_macros::{EnumString, Display, EnumVariantNames};
 use uuid::Uuid;
 
+pub fn default_api_version() -> String { String::from("2022-06-28") }
+
 #[derive(Serialize, Deserialize)]
 pub struct Text {
     pub content: String

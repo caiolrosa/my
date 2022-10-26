@@ -2,13 +2,15 @@ mod cmd;
 mod notion;
 mod config;
 
+use crate::config::{ConfigServiceImpl, ConfigService};
 use crate::notion::service::NotionServiceImpl;
 use std::env;
 
 use crate::cmd::task::TaskHandler;
+use cmd::github::GithubHandler;
+use cmd::config::ConfigHandler;
 use anyhow::{Result, Context};
 use clap::{Parser, Subcommand};
-use cmd::github::GithubHandler;
 use dialoguer::{theme::ColorfulTheme, Password};
 use notion::client::NotionClientImpl;
 
@@ -19,6 +21,9 @@ enum RootCommand {
 
     /// Interact with github resources
     Github(GithubHandler),
+
+    /// Edit cli configuration
+    Config(ConfigHandler),
 }
 
 #[derive(Parser)]
@@ -55,17 +60,19 @@ fn notion_token() -> Result<String> {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-    let token = notion_token()?;
-    let config = config::load_config()?;
+    let config_service = ConfigServiceImpl::new();
+    let config = config_service.load_config()?;
 
     match &cli.command {
         RootCommand::Task(handler) => {
-            let notion_client = NotionClientImpl::new(token);
+            let token = notion_token()?;
+            let notion_client = NotionClientImpl::new(config.notion.api_version.to_string(), token);
             let notion_service = NotionServiceImpl::new(Box::new(notion_client), config.notion.task_database_id.to_string());
 
             handler.handle(notion_service).await?;
         }
         RootCommand::Github(handler) => handler.handle(),
+        RootCommand::Config(handler) => handler.handle(&config_service, &config)?,
     }
 
     Ok(())

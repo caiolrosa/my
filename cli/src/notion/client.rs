@@ -13,14 +13,13 @@ pub trait NotionClient {
 }
 
 pub struct NotionClientImpl {
+    notion_api_version: String,
     notion_token: String
 }
 
 impl NotionClientImpl {
-    pub fn new(notion_token: String) -> NotionClientImpl {
-        NotionClientImpl {
-            notion_token
-        }
+    pub fn new(notion_api_version: String, notion_token: String) -> NotionClientImpl {
+        NotionClientImpl { notion_api_version, notion_token }
     }
 
     fn build_url(&self, endpoint: &str) -> String {
@@ -29,7 +28,7 @@ impl NotionClientImpl {
 
     fn build_request(&self, builder: reqwest::RequestBuilder) -> reqwest::RequestBuilder {
         builder
-            .header("Notion-Version", "2022-06-28")
+            .header("Notion-Version", self.notion_api_version.to_string())
             .header("Content-Type", "application/json")
             .bearer_auth(&self.notion_token)
     }
