@@ -8,7 +8,7 @@ use std::env;
 use crate::cmd::task::TaskHandler;
 use anyhow::{Result, Context};
 use clap::{Parser, Subcommand};
-use cmd::{calendar::CalendarHandler, github::GithubHandler};
+use cmd::github::GithubHandler;
 use dialoguer::{theme::ColorfulTheme, Password};
 use notion::client::NotionClientImpl;
 
@@ -16,9 +16,6 @@ use notion::client::NotionClientImpl;
 enum RootCommand {
     /// Interact with CLI generated tasks and view tasks from any source
     Task(TaskHandler),
-
-    /// Interact and syncronize calendar information
-    Calendar(CalendarHandler),
 
     /// Interact with github resources
     Github(GithubHandler),
@@ -68,7 +65,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             handler.handle(notion_service).await?;
         }
-        RootCommand::Calendar(handler) => handler.handle(),
         RootCommand::Github(handler) => handler.handle(),
     }
 
