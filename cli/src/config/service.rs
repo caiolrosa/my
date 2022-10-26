@@ -1,38 +1,20 @@
 use std::path::Path;
 use crate::config::{Config, ConfigServiceImpl, ConfigService};
-use crate::notion;
 use std::{fs::{File, self}, io::{Write, Read}, path::PathBuf};
 
 use anyhow::{Result, anyhow, Context};
-use dialoguer::{Input, theme::ColorfulTheme};
+use dialoguer::Editor;
 
 impl ConfigServiceImpl {
     pub fn new() -> ConfigServiceImpl {
         ConfigServiceImpl {}
     }
 
-    fn prompt_config_setup(&self) -> Result<Config> {
-        let theme = ColorfulTheme::default();
-        let task_database_id = Input::with_theme(&theme)
-            .with_prompt("Notion task database id")
-            .interact()
-            .with_context(|| "Failed to read user notion task database id input")?;
-
-        let notion_version = Input::with_theme(&theme)
-            .with_prompt("Notion API version")
-            .with_initial_text(&notion::default_api_version())
-            .interact_text()
-            .with_context(|| "Failed to read notion api version input")?;
-        
-        Ok(Config::new(notion_version, task_database_id))
-    }
-
     fn init_config(&self, config_file: &Path) -> Result<Config> {
         println!("Config file not found at ({}), please follow the instructions below", config_file.to_str().unwrap_or("Directory not found"));
         fs::create_dir_all(config_file.parent().ok_or_else(|| anyhow!("Failed getting config file parent directory"))?)?;
 
-        let config = self.prompt_config_setup()?;
-        self.save_config(config)
+        self.edit_config(None)
     }
 
     fn config_file_path(&self) -> Result<PathBuf> {
@@ -61,15 +43,21 @@ impl ConfigService for ConfigServiceImpl {
         }
     }
 
-    fn save_config(&self, config: Config) -> Result<Config> {
+    fn edit_config(&self, config: Option<&Config>) -> Result<Config> {
         let file_path = self.config_file_path()?;
         let mut file = File::create(file_path)?;
-        let serialized_config = toml::to_string(&config)?;
-        if file.write(serialized_config.as_bytes())? != serialized_config.as_bytes().len() {
+
+        let default_config = Config::default();
+        let editable_config = config.unwrap_or(&default_config);
+        let serialized_editable_config = toml::to_string(&editable_config)?;
+
+        let edited_config_text = Editor::new().edit(&serialized_editable_config)?.ok_or_else(|| anyhow!("Failed to edit config file or operation was canceled"))?;
+        let edited_config = toml::from_str::<Config>(&edited_config_text)?;
+        if file.write(edited_config_text.as_bytes())? != edited_config_text.as_bytes().len() {
             return Err(anyhow!("Failed to write user config file"))
         }
 
-        Ok(config)
+        Ok(edited_config)
     }
 }
 
