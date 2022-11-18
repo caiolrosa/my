@@ -29,6 +29,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {border = 'rounded'}
+)
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {border = 'rounded'}
+)
+
+vim.diagnostic.config({
+  virtual_text = true,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'always',
+    header = '',
+    prefix = '',
+  },
+})
+
 require('lspconfig').gopls.setup{}
 require('lspconfig').rust_analyzer.setup{}
 require('lspconfig').solargraph.setup{}
@@ -36,7 +57,10 @@ require('lspconfig').tsserver.setup{}
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
 local luasnip = require('luasnip')
 
 local select_opts = {behavior = cmp.SelectBehavior.Select}
