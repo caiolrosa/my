@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lspconfig').gopls.setup{}
 require('lspconfig').rust_analyzer.setup{}
 require('lspconfig').solargraph.setup{}
+require('lspconfig').tsserver.setup{}
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
