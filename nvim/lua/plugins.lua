@@ -3,11 +3,21 @@ require('autoload_packer')
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
+  use 'williamboman/mason.nvim'
+  use "williamboman/mason-lspconfig.nvim"
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'L3MON4D3/LuaSnip'
+
   use 'shaunsingh/nord.nvim'
   use 'kyazdani42/nvim-web-devicons'
 
-  use { 'neoclide/coc.nvim', branch = 'release', run = function() vim.fn['coc#util#install']() end }
-  use 'dense-analysis/ale'
+  -- use { 'neoclide/coc.nvim', branch = 'release', run = function() vim.fn['coc#util#install']() end }
+  -- use 'dense-analysis/ale'
 
   use 'tpope/vim-endwise'
   use 'Raimondi/delimitMate'
@@ -29,6 +39,8 @@ require('plugins.colorscheme')
 require('plugins.line')
 require('plugins.tree')
 require('plugins.telescope')
-require('plugins.coc')
+-- require('plugins.coc')
+require('plugins.mason')
+require('plugins.lsp')
 require('plugins.treesitter')
 require('plugins.vim_close_tag')
