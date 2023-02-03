@@ -14,7 +14,7 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
-  use { "glepnir/lspsaga.nvim", branch = "main" }
+  use { "glepnir/lspsaga.nvim", branch = "main", requires = { { "nvim-tree/nvim-web-devicons" } } }
 
   use 'shaunsingh/nord.nvim'
   use 'kyazdani42/nvim-web-devicons'
