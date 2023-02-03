@@ -14,6 +14,7 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
+  use { "glepnir/lspsaga.nvim", branch = "main" }
 
   use 'shaunsingh/nord.nvim'
   use 'kyazdani42/nvim-web-devicons'
@@ -35,5 +36,7 @@ require('plugins.tree')
 require('plugins.telescope')
 require('plugins.mason')
 require('plugins.lsp')
+require('plugins.cmp')
+require('plugins.saga')
 require('plugins.autopairs')
--- require('plugins.treesitter')
+require('plugins.treesitter')
