@@ -1,7 +1,6 @@
-local keymap = vim.keymap.set
-local saga = require("lspsaga")
+require("lspsaga").setup({})
 
-saga.init_lsp_saga()
+local keymap = vim.keymap.set
 
 keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 keymap({"n","v"}, "<leader>ac", "<cmd>Lspsaga code_action<CR>", { silent = true })
