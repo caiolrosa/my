@@ -22,7 +22,7 @@ ZSH_THEME="agnoster"
 plugins=(
   asdf
   git
-  zsh-z
+  z
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
