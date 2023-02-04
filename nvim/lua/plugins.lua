@@ -17,15 +17,15 @@ require('packer').startup(function()
   use { "glepnir/lspsaga.nvim", branch = "main", requires = { { "nvim-tree/nvim-web-devicons" } } }
 
   use 'shaunsingh/nord.nvim'
-  use 'kyazdani42/nvim-web-devicons'
+  use 'nvim-tree/nvim-web-devicons'
 
   use 'tpope/vim-surround'
   use 'vimwiki/vimwiki'
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
-  use { 'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons' }
-  use { 'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons' }
+  use { 'hoob3rt/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons', opt = true } }
+  use { 'akinsho/bufferline.nvim', requires = 'nvim-tree/nvim-web-devicons' }
+  use { 'nvim-tree/nvim-tree.lua', requires = 'nvim-tree/nvim-web-devicons' }
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
 end)
