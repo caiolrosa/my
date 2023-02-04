@@ -6,6 +6,7 @@ require('nvim-treesitter.configs').setup {
     "javascript",
     "typescript",
     "tsx",
+    "hcl",
   },
   highlight = {
     enable = true,
