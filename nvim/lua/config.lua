@@ -5,15 +5,6 @@ vim.cmd('autocmd Filetype typescript setlocal expandtab tabstop=2 shiftwidth=2')
 vim.cmd('autocmd Filetype typescriptreact setlocal expandtab tabstop=2 shiftwidth=2')
 vim.cmd('autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2')
 vim.cmd('autocmd Filetype javascriptreact setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype vim setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype json setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype scss setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype css setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype lua setlocal expandtab tabstop=2 shiftwidth=2')
---vim.cmd('autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4')
---vim.cmd('autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4')
---vim.cmd('autocmd! Filetype qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>T')
 
 -- Editor config --
 vim.o.guicursor = ''
@@ -24,6 +15,9 @@ vim.wo.relativenumber = true
 vim.wo.wrap = false
 vim.bo.syntax = 'ON'
 vim.opt.termguicolors = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.updatetime = 50
 vim.cmd('filetype plugin indent on')
 
 vim.api.nvim_set_keymap('n', '<C-j>', ':bprevious<CR>', { noremap = true, silent = true })

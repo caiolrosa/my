@@ -26,7 +26,7 @@ require('packer').startup(function()
   use 'nvim-tree/nvim-web-devicons'
 
   use 'tpope/vim-surround'
-  use 'vimwiki/vimwiki'
+  use 'tpope/vim-fugitive'
 
   use { 'hoob3rt/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons', opt = true } }
   use { 'akinsho/bufferline.nvim', requires = 'nvim-tree/nvim-web-devicons' }
@@ -45,4 +45,3 @@ require('plugins.mason')
 require('plugins.lsp')
 require('plugins.cmp')
 require('plugins.saga')
-require('plugins.vimwiki')
