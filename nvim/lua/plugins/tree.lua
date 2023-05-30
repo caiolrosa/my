@@ -6,4 +6,3 @@ vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeFindFile<CR>', opts)
 
 vim.g.nvim_tree_quit_on_open = 1
 vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_auto_ignore_ft = { 'startify' }
