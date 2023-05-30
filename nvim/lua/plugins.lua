@@ -23,7 +23,6 @@ require('packer').startup(function()
   use { "glepnir/lspsaga.nvim", branch = "main", requires = { { "nvim-tree/nvim-web-devicons" } } }
 
   use 'shaunsingh/nord.nvim'
-  use 'nvim-tree/nvim-web-devicons'
 
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
