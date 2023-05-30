@@ -11,8 +11,17 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
 
 local lsp_flags = { debounce_text_changes = 150 }
 require('lspconfig').gopls.setup{ flags = lsp_flags }
-require('lspconfig').rust_analyzer.setup{ flags = lsp_flags }
-require('lspconfig').solargraph.setup{ flags = lsp_flags }
+require('lspconfig').rust_analyzer.setup{
+  flags = lsp_flags,
+  settings = {
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        command = "clippy"
+      }
+    }
+  }
+}
+require('lspconfig').solargraph.setup{ flags = lsp_flags, formatting = false }
 require('lspconfig').tsserver.setup{ flags = lsp_flags }
 require('lspconfig').eslint.setup{ flags = lsp_flags }
 require('lspconfig').terraformls.setup{ flags = lsp_flags }
@@ -40,4 +49,5 @@ vim.diagnostic.config({
   },
 })
 
-vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.api.nvim_set_keymap('n', '<leader>nf', ':set eventignore=BufWritePre<CR>', { noremap = true, silent = true })
