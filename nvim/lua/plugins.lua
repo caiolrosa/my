@@ -1,8 +1,14 @@
 require('autoload_packer')
-
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
   use 'neovim/nvim-lspconfig'
@@ -22,7 +28,6 @@ require('packer').startup(function()
   use 'tpope/vim-surround'
   use 'vimwiki/vimwiki'
 
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'hoob3rt/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons', opt = true } }
   use { 'akinsho/bufferline.nvim', requires = 'nvim-tree/nvim-web-devicons' }
   use { 'nvim-tree/nvim-tree.lua', requires = 'nvim-tree/nvim-web-devicons' }
@@ -34,9 +39,10 @@ require('plugins.colorscheme')
 require('plugins.line')
 require('plugins.tree')
 require('plugins.telescope')
+require('plugins.treesitter')
+require('plugins.autopairs')
 require('plugins.mason')
 require('plugins.lsp')
 require('plugins.cmp')
 require('plugins.saga')
-require('plugins.autopairs')
-require('plugins.treesitter')
+require('plugins.vimwiki')
