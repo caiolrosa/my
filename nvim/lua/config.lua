@@ -15,7 +15,6 @@ vim.wo.relativenumber = true
 vim.wo.wrap = false
 vim.bo.syntax = 'ON'
 vim.opt.termguicolors = true
-vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.updatetime = 50
 vim.cmd('filetype plugin indent on')
