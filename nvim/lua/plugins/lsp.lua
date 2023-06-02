@@ -1,53 +1,36 @@
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-local lspconfig = require('lspconfig')
-local lsp_defaults = lspconfig.util.default_config
-
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lsp_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
-
-local lsp_flags = { debounce_text_changes = 150 }
-require('lspconfig').gopls.setup{ flags = lsp_flags }
-require('lspconfig').rust_analyzer.setup{
-  flags = lsp_flags,
-  settings = {
-    ["rust-analyzer"] = {
-      checkOnSave = {
-        command = "clippy"
-      }
-    }
-  }
-}
-require('lspconfig').solargraph.setup{ flags = lsp_flags, formatting = false }
-require('lspconfig').tsserver.setup{ flags = lsp_flags }
-require('lspconfig').eslint.setup{ flags = lsp_flags }
-require('lspconfig').terraformls.setup{ flags = lsp_flags }
-
-require('luasnip.loaders.from_vscode').lazy_load()
-
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-  vim.lsp.handlers.hover,
-  {border = 'rounded'}
-)
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {border = 'rounded'}
-)
-
-vim.diagnostic.config({
-  virtual_text = true,
-  severity_sort = true,
-  float = {
-    border = 'rounded',
-    source = 'always',
-    header = '',
-    prefix = '',
-  },
+local lsp = require('lsp-zero').preset('recommended')
+lsp.ensure_installed({
+  'tsserver',
+  'eslint',
+  'lua_ls'
 })
 
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-vim.api.nvim_set_keymap('n', '<leader>nf', ':set eventignore=BufWritePre<CR>', { noremap = true, silent = true })
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+local cmp_mappings = lsp.defaults.cmp_mappings({
+  ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+  ['<CR>'] = cmp.mapping.confirm({ select = true })
+})
+
+lsp.setup_nvim_cmp({ mapping = cmp_mappings })
+
+lsp.on_attach(function(_client, bufnr)
+  local opts = { buffer = bufnr, remap = false }
+
+  vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set('n', '<leader>do', function() vim.diagnostic.open_float() end, opts)
+  vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
+  vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set('n', '<leader>ac', function() vim.lsp.buf.code_action() end, opts)
+  vim.keymap.set('n', '<leader>cr', function() vim.lsp.buf.references() end, opts)
+  vim.keymap.set('n', '<leader>rn', function() vim.lsp.buf.rename() end, opts)
+end)
+
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+lsp.setup()
