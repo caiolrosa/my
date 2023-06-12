@@ -19,8 +19,11 @@ vim.opt.incsearch = true
 vim.opt.updatetime = 50
 vim.cmd('filetype plugin indent on')
 
-vim.api.nvim_set_keymap('n', '<C-j>', ':bprevious<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-k>', ':bnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-d>', ':bw<CR>', { noremap = true, silent = true })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("n", "<C-j>", "<C-d>zz")
+vim.keymap.set("n", "<C-k>", "<C-u>zz")
+
+vim.api.nvim_set_keymap('n', '<C-q>', ':bw<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cf', ':let @+ = expand("%:p")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', {})

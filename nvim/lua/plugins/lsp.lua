@@ -29,8 +29,30 @@ lsp.on_attach(function(_client, bufnr)
   vim.keymap.set('n', '<leader>ac', function() vim.lsp.buf.code_action() end, opts)
   vim.keymap.set('n', '<leader>cr', function() vim.lsp.buf.references() end, opts)
   vim.keymap.set('n', '<leader>rn', function() vim.lsp.buf.rename() end, opts)
+  vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
 end)
 
+lsp.format_on_save({
+  format_opts = {
+    async = false,
+    timemout_ms = 10000
+  },
+  servers = {
+    ['rust_analyzer'] = {'rust'},
+    ['standardrb'] = {'ruby'},
+    ['tsserver'] = {'typescript'}
+  }
+})
+
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+require('lspconfig').rust_analyzer.setup({
+  settings = {
+    ['rust-analyzer'] = {
+      checkOnSave = {
+        command = 'clippy'
+      },
+    },
+  },
+})
 
 lsp.setup()
