@@ -55,4 +55,5 @@ require('lspconfig').rust_analyzer.setup({
   },
 })
 
+vim.api.nvim_set_keymap('n', '<leader>nf', ':set eventignore=BufWritePre<CR>', { noremap = true, silent = true })
 lsp.setup()
