@@ -1,25 +1,22 @@
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
-local lsp = require('lsp-zero').preset('recommended')
-lsp.ensure_installed({
-  'tsserver',
-  'eslint',
-  'lua_ls'
-})
+local lsp = require('lsp-zero').preset()
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-  ['<CR>'] = cmp.mapping.confirm({ select = true })
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true })
+  })
 })
-
-lsp.setup_nvim_cmp({ mapping = cmp_mappings })
 
 lsp.on_attach(function(_client, bufnr)
   local opts = { buffer = bufnr, remap = false }
+
+  lsp.default_keymaps({buffer = bufnr})
 
   vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
   vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
@@ -32,19 +29,31 @@ lsp.on_attach(function(_client, bufnr)
   vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format() end, opts)
 end)
 
+lsp.extend_cmp()
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {'tsserver', 'lua_ls'},
+  handlers = {
+    lsp.default_setup,
+    lua_ls = function()
+      require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+    end,
+  },
+})
+
 lsp.format_on_save({
   format_opts = {
-    async = false,
+    async = true,
     timemout_ms = 10000
   },
   servers = {
     ['rust_analyzer'] = {'rust'},
     ['standardrb'] = {'ruby'},
-    ['tsserver'] = {'typescript'}
+    ['tsserver'] = {'javascript', 'typescript', 'typescriptreact'},
   }
 })
 
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 require('lspconfig').rust_analyzer.setup({
   settings = {
     ['rust-analyzer'] = {
@@ -56,4 +65,3 @@ require('lspconfig').rust_analyzer.setup({
 })
 
 vim.api.nvim_set_keymap('n', '<leader>nf', ':set eventignore=BufWritePre<CR>', { noremap = true, silent = true })
-lsp.setup()
