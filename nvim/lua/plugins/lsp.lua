@@ -7,6 +7,7 @@ local cmp = require('cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
 cmp.setup({
+  formatting = require('lsp-zero').cmp_format(),
   mapping = cmp.mapping.preset.insert({
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
     ['<CR>'] = cmp.mapping.confirm({ select = true })
