@@ -45,7 +45,7 @@ require('mason-lspconfig').setup({
 
 lsp.format_on_save({
   format_opts = {
-    async = true,
+    async = false,
     timemout_ms = 10000
   },
   servers = {
