@@ -90,8 +90,8 @@ key_bindings:
   - { key: Paste,                                  action: Paste            }
   - { key: W,          mods: Control|Alt,          action: Quit             }
   - { key: N,          mods: Control|Alt,          action: SpawnNewInstance }
-  - { key: F,          mods: Control|alt,          action: ToggleFullscreen }
-  - { key: Equals,     mods: Control,              action: IncreaseFontSize }
-  - { key: Minus,      mods: Control,              action: DecreaseFontSize }
+  - { key: F,          mods: Control|Alt,          action: ToggleFullscreen }
+  - { key: Equals,     mods: Control|Alt,          action: IncreaseFontSize }
+  - { key: Minus,      mods: Control|Alt,          action: DecreaseFontSize }
   - { key: Left,       mods: Alt,                  chars: "\x1bb"           }
   - { key: Right,      mods: Alt,                  chars: "\x1bf"           }
