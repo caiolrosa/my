@@ -3,3 +3,4 @@
 -- Add any additional options here
 
 vim.opt.guicursor = { "a:ver25" }
+vim.opt.scrolloff = 10
