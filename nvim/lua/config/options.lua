@@ -4,5 +4,6 @@
 
 vim.opt.guicursor = { "a:ver25" }
 vim.opt.scrolloff = 10
+vim.opt.clipboard = "unnamed"
 
 vim.api.nvim_set_keymap("n", "<C-q>", ":bw<CR>", { noremap = true, silent = true })
