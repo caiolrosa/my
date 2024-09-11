@@ -83,7 +83,10 @@ colors:
     white: '#aeb3bb'
 
 cursor:
-  style: Beam
+  style:
+    shape: Beam
+  vi_mode_style:
+    shape: Beam
 
 key_bindings:
   - { key: Copy,                                   action: Copy             }
