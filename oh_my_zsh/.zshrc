@@ -45,6 +45,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.profile
+source $HOME/.local/bin/
 
 # Aliases
 alias zshconfig="nvim ~/.zshrc"
