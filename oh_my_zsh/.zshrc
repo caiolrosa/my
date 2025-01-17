@@ -27,6 +27,10 @@ plugins=(
   zsh-autosuggestions
 )
 
+# Aliases
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+
 # ZSH Autosuggestions config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4C566A"
 
@@ -45,9 +49,3 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.profile
-
-# Aliases
-alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-
-eval "$(direnv hook zsh)"
