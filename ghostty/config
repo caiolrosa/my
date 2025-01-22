@@ -1,0 +1,8 @@
+command = "/bin/zsh -l -c tmux"
+theme = "nord"
+font-family = "SauceCodePro Nerd Font"
+font-family-bold = "SauceCodePro Nerd Font"
+font-family-italic = "SauceCodePro Nerd Font"
+font-family-bold-italic = "SauceCodePro Nerd Font"
+font-size = 15
+cursor-style = "bar"
