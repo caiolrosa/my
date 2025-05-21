@@ -8,24 +8,11 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        "standardrb",
-        "solargraph",
+        "ruby-lsp",
       })
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        solargraph = {
-          init_options = {
-            formatting = false,
-          },
-        },
-      },
-    },
   },
 }

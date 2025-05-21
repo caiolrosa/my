@@ -30,6 +30,9 @@ return {
       })
 
       require("org-bullets").setup()
+      require("internal.github").setup({
+        org_issue_sync_file = "/Users/caio/Dropbox/orgmode/work.org",
+      })
     end,
   },
 }
