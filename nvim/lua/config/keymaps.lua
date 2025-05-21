@@ -17,4 +17,13 @@ vim.keymap.set("n", "<leader>b9", "<Cmd>BufferLineGoToBuffer 9<CR>")
 
 -- Which Key --
 local wk = require("which-key")
-wk.add({ "<leader>of", LazyVim.pick("files", { cwd = "~/orgmode" }), desc = "Find orgmode" })
+wk.add({ "<leader>o", group = "orgmode" })
+wk.add({ "<leader>os", group = "sync" })
+wk.add({ "<leader>of", LazyVim.pick("files", { cwd = "~/orgmode" }), group = "find" })
+wk.add({
+  "<leader>osg",
+  function()
+    require("internal.github").sync_issues()
+  end,
+  group = "github",
+})
