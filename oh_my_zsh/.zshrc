@@ -30,6 +30,7 @@ plugins=(
 # Aliases
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias dcr="docker compose run --rm"
 
 # ZSH Autosuggestions config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4C566A"
