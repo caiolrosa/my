@@ -36,6 +36,16 @@ local function config()
 			mods = "ALT",
 			action = wezterm.action.Search("CurrentSelectionOrEmptyString"),
 		},
+		{
+			key = "LeftArrow",
+			mods = "ALT",
+			action = wezterm.action.SendKey({ key = "b", mods = "ALT" }),
+		},
+		{
+			key = "RightArrow",
+			mods = "ALT",
+			action = wezterm.action.SendKey({ key = "f", mods = "ALT" }),
+		},
 	}
 
 	for i = 1, 8 do
