@@ -12,7 +12,8 @@ local function setup()
 		},
 		sections = {
 			tabline_a = { " " },
-			tabline_y = { "datetime" },
+			tabline_b = { "workspace" },
+			tabline_y = { " " },
 			tabline_z = { " " },
 		},
 	})
