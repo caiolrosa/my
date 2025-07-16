@@ -15,4 +15,14 @@ return {
       })
     end,
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ruby_lsp = {
+          cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp" },
+        },
+      },
+    },
+  },
 }
