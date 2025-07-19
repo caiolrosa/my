@@ -46,6 +46,18 @@ local function config()
 			mods = "ALT",
 			action = wezterm.action.SendKey({ key = "f", mods = "ALT" }),
 		},
+		{
+			key = "R",
+			mods = "ALT|SHIFT",
+			action = wezterm.action.PromptInputLine({
+				description = "Enter new name for tab",
+				action = wezterm.action_callback(function(window, _, line)
+					if line then
+						window:active_tab():set_title(line)
+					end
+				end),
+			}),
+		},
 	}
 
 	for i = 1, 8 do
