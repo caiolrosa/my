@@ -7,6 +7,7 @@ vim.opt.scrolloff = 10
 vim.opt.clipboard = "unnamed"
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = "nc"
+vim.opt.wrap = false
 
 vim.g.nord_bold = true
 vim.g.nord_italic = false
